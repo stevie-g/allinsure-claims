@@ -1,11 +1,7 @@
 import React from 'react'
-import CustomerHomePage from '../screens/customers/CustomerHomePage'
-import StaffHomePage from '../screens/staff/StaffHomePage'
 import { Route, Redirect } from 'react-router-dom'
 
 const PrivateRoute = ({component: Component, appState, ...rest}) => {
-    console.log("private route", rest)
-
     return (
         <Route { ...rest } render={(props) => appState.isLoggedIn ?
             (
@@ -13,7 +9,7 @@ const PrivateRoute = ({component: Component, appState, ...rest}) => {
             ) : 
             (
                 <Redirect to={{
-                    pathname: '/home',
+                    pathname: '/',
                     state: { from: props.location }
                 }}
                 />

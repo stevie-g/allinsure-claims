@@ -3,10 +3,8 @@ import { Redirect } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 
 const Login = (props) => {
-    console.log(props)
 
     const handleLogon = () => {
-        console.log('clicked')
         props.updateAppState({
             isLoggedIn: true,
             userType: props.appState.userType,
@@ -40,7 +38,6 @@ const Login = (props) => {
                 </Form.Group>
                 <Button variant='light' onClick={() => {
                     handleLogon()
-                    console.log("after click")
                 }}>
                     Log in
                 </Button>

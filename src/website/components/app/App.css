@@ -33,11 +33,15 @@
 }
 
 .home {
-    padding: 100px;
+    padding: 200px 500px;
     justify-content: center;
 }
 
 .loginForm {
-    padding: 100px;
+    padding: 200px 500px;
     justify-content: center;
+}
+
+.tabs {
+    padding: 100px 200px;
 }
