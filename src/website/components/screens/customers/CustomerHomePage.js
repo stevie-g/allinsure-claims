@@ -17,7 +17,7 @@ const CustomerHomePage = () => {
             <Tab eventKey={'account'} title={'Account Details'}>
                 <AccountTab />
             </Tab>
-            <Tab eventKey={'new'} title={'New Claim'} pullRight>
+            <Tab eventKey={'new'} title={'New Claim'} pullright='true'>
                 <NewClaimTab />
             </Tab>
         </Tabs>
