@@ -1,3 +1,87 @@
+# README
+
+## Initial build
+
+What you need
+- [Node](https://nodejs.org/en/download/)
+- [npm](https://www.npmjs.com/get-npm) - this is included in up-to-date versions of Node
+- preferably a code editor like [Visual Studio Code](https://code.visualstudio.com/docs?start=true)
+
+Resources:
+- [React](https://reactjs.org/) documentation
+
+## Run
+
+What you need to do the first time:
+- open terminal
+- navigate to project folder (allinsure-claims)
+- run command `npm i` to install dependencies (you will need to do this whenever new dependencies are added - e.g. packages like bootstrap)
+
+To start the program
+- navigate to the website folder (allinsure-claims/src/website)
+- run command `npm start`
+- site will open in your browser at http://localhost:3000 (this may take some time initially)
+- whenever you make changes, press Save and the page will reload and show your changes
+
+## Github
+
+First setup:
+- sign up for Github and download [git](https://git-scm.com/downloads)
+- read below resources to set up git usernames and email and understand git workflow
+- clone repository on github to create your own *local* repository - ***IMPORTANT***: **do not make changes to the master branch - see below 'Project workflow'**
+
+Resources:
+- https://guides.github.com/introduction/git-handbook/
+- https://help.github.com/en/articles/set-up-git?email_source=welcome
+- https://help.github.com/en/articles/cloning-a-repository
+- https://education.github.com/git-cheat-sheet-education.pdf
+
+## Project workflow
+
+The master branch should always be a functioning program - no changes should be introduced until everyone has checked that they work and don't introduce any bugs.
+To keep the master branch secure:
+- create your own branch to work on:
+  ```
+  git branch [branch-name]
+  ```
+  where branch-name is something meaningful like 'user-authentication';
+  this is like a copy of the master branch at this point in time for you to work on - any changes here don't affect the master
+
+- when you are happy with your changes (i.e. you have finished whatever you were working on and want to integrate it into the main project), you need to `add`, `commit`, and `push` your changes to your branch:
+  ```
+  git add .
+  ```                         
+  adds all files in the project directory ready to be committed
+  
+  ```
+  git commit -m 'Commit message'
+  ```
+  saves your changes to your current branch in your *local* repository (not the github repository) - commit message should be meaningful   (i.e. 'New claims page complete')
+  
+  ```
+  git push -u origin [branch-name]
+  ```  
+  updates the same branch in the *github* repository with the changes your have made to your *local* repository
+
+- to include your changes in the master branch, create a 'pull request' on github so other developers can view the changes before they are merged into the master branch
+
+https://help.github.com/en/articles/creating-a-pull-request
+
+https://help.github.com/en/articles/merging-a-pull-request
+  
+  
+**Note:**
+If you are working on your own branch but another developer has made changes that you want to include in your own work, you need to `pull` these changes from github:
+   ```
+   git pull
+   ```
+   fetches any changes from the online repository and merges them into your local branch
+
+
+
+
+# React readme
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
