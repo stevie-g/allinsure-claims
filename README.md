@@ -9,6 +9,8 @@ What you need
 
 Resources:
 - [React](https://reactjs.org/) documentation
+- [Web SQL](https://www.tutorialspoint.com/html5/html5_web_sql.htm)
+- [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ## Run
 
