@@ -7,11 +7,11 @@ const Form = (props) => {
     switch (props.insuranceType) {
         case 'car':
             return (
-                <CarInsuranceForm appState={props.appState} insuranceType={props.insuranceType} updateInsuranceType={props.updateInsuranceType} />
+                <CarInsuranceForm appState={props.appState} insuranceType={props.insuranceType} updateInsuranceType={props.updateInsuranceType} db={props.db} />
             )
         case 'home':
             return (
-                <HomeInsuranceForm appState={props.appState} insuranceType={props.insuranceType} updateInsuranceType={props.updateInsuranceType} />
+                <HomeInsuranceForm appState={props.appState} insuranceType={props.insuranceType} updateInsuranceType={props.updateInsuranceType} db={props.db} />
             )
         case 'submitted':
             return (

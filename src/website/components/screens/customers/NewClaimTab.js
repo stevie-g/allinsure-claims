@@ -16,7 +16,7 @@ const NewClaimTab = (props) => {
                     updateInsuranceType('home')
                 }}>My home insurance policy</DropdownItem>
             </DropdownButton>
-            {insuranceType && <Form insuranceType={insuranceType} updateInsuranceType={updateInsuranceType} appState={props.appState}/>}
+            {insuranceType && <Form insuranceType={insuranceType} updateInsuranceType={updateInsuranceType} appState={props.appState} db={props.db}/>}
         </Container>
     )
 }

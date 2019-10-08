@@ -41,7 +41,6 @@ const Login = (props) => {
 
     // should redirect to page they came from
     if (props.appState.isLoggedIn) {
-        console.log(JSON.stringify(localStorage.isLoggedIn))
         //switch
         if (props.appState.user.type === 'customer') {
             return (

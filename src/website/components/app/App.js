@@ -57,6 +57,11 @@ function App() {
                 q.executeSql('INSERT INTO CUSTOMER VALUES ("jg081", "123456")')
                 q.executeSql('INSERT INTO CUSTOMER VALUES ("skg971", "123456")')
             })
+            dbresult.transaction((q) => {
+                q.executeSql('CREATE TABLE IF NOT EXISTS CLAIM (id unique, insuranceType, dateOfClaim, status)')
+                q.executeSql('INSERT INTO CLAIM VALUES ("0000001", "Car", "8/10/2019", "Pending")')
+            })
+            console.log(JSON.stringify(dbresult), 'updated')
             updateDb(dbresult)
         }
         initialiseDatabase()
@@ -73,8 +78,9 @@ function App() {
                 <Switch>
                     <Route exact path='/' render={(props) => (<Home {...props} appState={appState} updateAppState={updateAppState} />)} />
                     <Route path='/login' render={(props) => (<Login {...props} appState={appState} updateAppState={updateAppState} db={db}/>)} />
-                    <PrivateRoute exact path='/customer' component={CustomerHomePage} appState={appState} />
-                    <PrivateRoute exact path='/staff' component={StaffHomePage} appState={appState} />
+                    <Route path='/customer' render={(props) => (<CustomerHomePage {...props} appState={appState} updateAppState={updateAppState} db={db}/>)} />
+                    {/* <PrivateRoute exact path='/customer' component={CustomerHomePage} appState={appState} db={db}/> */}
+                    <PrivateRoute exact path='/staff' component={StaffHomePage} appState={appState} db={db}/>
                     {/* <Route component={NoMatch} /> */}
                 </Switch>
             </Router>
