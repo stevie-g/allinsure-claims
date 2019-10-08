@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  
 }
 
 .App-logo {
@@ -44,4 +45,8 @@
 
 .tabs {
     padding: 100px 200px;
+}
+
+.container {
+    padding: 20px;
 }

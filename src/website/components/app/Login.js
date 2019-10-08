@@ -2,42 +2,79 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 
-const Login = (props) => {
 
-    const handleLogon = () => {
-        props.updateAppState({
-            isLoggedIn: true,
-            userType: props.appState.userType,
-            username: 'Stevie'
-        })
+const Login = (props) => {
+    let userType = localStorage.userType
+    let authenticatedUserFirstName = ''
+    const loginValues = {
+        username: '',
+        password: ''
+    }
+    
+    const authenticateUser = (user) => {
+        if (props.db) {
+            props.db.transaction(function (q) {
+                q.executeSql('SELECT * FROM CUSTOMER WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
+                    if (results.rows.length > 0) {
+                        authenticatedUserFirstName = results.rows.item(0).username
+                        localStorage.isLoggedIn = 'true'
+                        localStorage.firstName = authenticatedUserFirstName
+                        props.updateAppState({
+                            isLoggedIn: true,
+                            user: {
+                                type: userType,
+                                firstName: authenticatedUserFirstName
+                            }
+                        })
+                    }
+                }, function (q, e) {
+                    console.log(e.message)
+                })
+            })
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        authenticateUser(loginValues)
     }
 
     // should redirect to page they came from
     if (props.appState.isLoggedIn) {
-        if (props.appState.userType === 'customer') {
+        //switch
+        if (props.appState.user.type === 'customer') {
             return (
                 <Redirect to='/customer' />
             )
         }
-        else if (props.appState.userType === 'staff') {
+        else if (props.appState.user.Type === 'staff') {
             return (
                 <Redirect to='/staff' />
+            )
+        }
+        else {
+            return (
+                <div></div>
             )
         }
     }
     else {
         return (
-            <Form className='loginForm'>
+            <Form className='loginForm' onSubmit={handleSubmit}>
                 <Form.Group controlId='loginFormUsername'>
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type='text' placeholder='Enter username' />
+                    <Form.Control type='text' placeholder='Enter username' name='username' onChange={(e) => {
+                        loginValues.username = e.target.value
+                    }}/>
                 </Form.Group>
                 <Form.Group controlId='loginFormPassword'>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type='password' placeholder='Enter password' />
+                    <Form.Control type='password' placeholder='Enter password' name='password' onChange={(e) => {
+                        loginValues.password = e.target.value
+                    }}/>
                 </Form.Group>
-                <Button variant='light' onClick={() => {
-                    handleLogon()
+                <Button variant='light' type='submit' name='sub' value='Submit' onClick={(e) => {
+                    handleSubmit(e)
                 }}>
                     Log in
                 </Button>
