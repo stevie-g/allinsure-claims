@@ -5,9 +5,16 @@ import { Col, Row } from 'react-bootstrap'
 
 const Home = (props) => {
     // should be wherever they came from
-    if (props.appState.isLoggedIn && props.appState.user.type === 'customer' && props.appState.user.firstName !== null) {
+    if (props.appState.isLoggedIn && props.appState.user.type === 'customer' && props.appState.user.id !== null) {
+        console.log(props)
+        console.log('redirecting from home')
         return (
             <Redirect to='/customer' />
+        )
+    }
+    else if (props.appState.isLoggedIn && props.appState.user.type === 'staff' && props.appState.user.id !== null) {
+        return (
+            <Redirect to='staff' />
         )
     }
     else {
@@ -15,24 +22,24 @@ const Home = (props) => {
             <div className='home'>
                 <Row>
                     <Col>
-                        <Link to='/login/customer' onClick={() => {
+                        <Link to='/login' onClick={() => {
                             props.updateAppState({
                                 isLoggedIn: false,
                                 user: {
                                     type: 'customer',
-                                    firstName: ''
+                                    id: ''
                                 }
                             })
                             localStorage.userType = 'customer'
                         }}>Customers</Link>
                     </Col>
                     <Col>
-                        <Link to='/login/staff' onClick={() => {
+                        <Link to='/login' onClick={() => {
                             props.updateAppState({
                                 isLoggedIn: false,
                                 user: {
                                     type: 'staff',
-                                    firstName: ''
+                                    id: ''
                                 }
                             })
                             localStorage.userType = 'staff'

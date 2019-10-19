@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Form from '../../form/Form'
 import { Container, DropdownButton, DropdownItem } from 'react-bootstrap'
 
-const NewClaimTab = (props) => {
+const CustomerNewClaim = (props) => {
     const [insuranceType, updateInsuranceType] = useState('')
 
     return (
@@ -21,4 +21,4 @@ const NewClaimTab = (props) => {
     )
 }
 
-export default NewClaimTab
+export default CustomerNewClaim

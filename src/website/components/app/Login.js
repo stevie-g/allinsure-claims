@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap'
 
 const Login = (props) => {
     let userType = localStorage.userType
-    let authenticatedUserFirstName = ''
+    let authenticatedUserID = ''
     const loginValues = {
         username: '',
         password: ''
@@ -13,24 +13,48 @@ const Login = (props) => {
     
     const authenticateUser = (user) => {
         if (props.db) {
-            props.db.transaction(function (q) {
-                q.executeSql('SELECT * FROM CUSTOMER WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
-                    if (results.rows.length > 0) {
-                        authenticatedUserFirstName = results.rows.item(0).username
-                        localStorage.isLoggedIn = 'true'
-                        localStorage.firstName = authenticatedUserFirstName
-                        props.updateAppState({
-                            isLoggedIn: true,
-                            user: {
-                                type: userType,
-                                firstName: authenticatedUserFirstName
-                            }
-                        })
-                    }
-                }, function (q, e) {
-                    console.log(e.message)
+            if (props.appState.user.type === 'customer') {
+                props.db.transaction(function (q) {
+                    q.executeSql('SELECT * FROM CUSTOMER WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
+                        console.log(results)
+                        if (results.rows.length > 0) {
+                            authenticatedUserID = results.rows.item(0).user_ID
+                            localStorage.isLoggedIn = 'true'
+                            localStorage.userID = authenticatedUserID
+                            props.updateAppState({
+                                isLoggedIn: true,
+                                user: {
+                                    type: userType,
+                                    id: authenticatedUserID
+                                }
+                            })
+                        }
+                    }, function (q, e) {
+                        console.log(e.message)
+                    })
                 })
-            })
+            }
+            else if (props.appState.user.type === 'staff') {
+                props.db.transaction(function (q) {
+                    q.executeSql('SELECT * FROM STAFF WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
+                        console.log(results)
+                        if (results.rows.length > 0) {
+                            authenticatedUserID = results.rows.item(0).user_ID
+                            localStorage.isLoggedIn = 'true'
+                            localStorage.userID = authenticatedUserID
+                            props.updateAppState({
+                                isLoggedIn: true,
+                                user: {
+                                    type: userType,
+                                    id: authenticatedUserID
+                                }
+                            })
+                        }
+                    }, function (q, e) {
+                        console.log(e.message)
+                    })
+                })
+            }
         }
     }
 
@@ -43,11 +67,13 @@ const Login = (props) => {
     if (props.appState.isLoggedIn) {
         //switch
         if (props.appState.user.type === 'customer') {
+            console.log('redirecting customer')
             return (
                 <Redirect to='/customer' />
             )
         }
-        else if (props.appState.user.Type === 'staff') {
+        else if (props.appState.user.type === 'staff') {
+            console.log('redirecting staff')
             return (
                 <Redirect to='/staff' />
             )

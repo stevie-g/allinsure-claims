@@ -2,12 +2,20 @@ import React from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
 
-
 const CarInsuranceForm = (props) => {
-    if (!localStorage.carCount) {
-        localStorage.carCount = '0'
-    }
     const formValues = {
+        id: `C000000${localStorage.count}`,
+        type: 'Car',
+        userID: props.appState.user.id,
+        staffID: props.appState.user.id % 2,
+        submitDate: new Date().toString(),
+        status: 'Pending',
+        staffFeedback: '',
+        incidentType:'',
+        incidentDate: '',
+        policeReport: '',
+        cost: '',
+        accidentDescription: '',
         driverSurname: '',
         driverFirstName: '',
         driverLicenceNumber: '',
@@ -17,22 +25,28 @@ const CarInsuranceForm = (props) => {
         otherDriverLicenceNumber: '',
         otherDriverLicencePlate: '',
         otherDriverInsurance: '',
-        accidentDate: '',
-        policeReport: '',
-        accidentDescription: ''
+        damageLocation: '',
+        contentsList: '',
     }
+    
 
     const handleSubmit = (e) => {
+        console.log(formValues)
         e.preventDefault()
         if (props.db) {
             props.db.transaction((q) => {
-                q.executeSql('CREATE TABLE IF NOT EXISTS CLAIM (id unique, insuranceType, dateOfClaim, status)')
-                q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?)', ["200", "Car", "15/10/19", "Pending"], function (q, results) {
-                    let storageNum = parseInt(localStorage.carCount)
-                    storageNum++
-                    let storageString = storageNum.toString()
-                    localStorage.carCount = storageString
-                })
+                q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                    [formValues.id, formValues.type, formValues.userID, formValues.staffID, formValues.submitDate, formValues.status, formValues.staffFeedback, formValues.incidentType,
+                        formValues.incidentDate, formValues.policeReport, formValues.cost, formValues.accidentDescription, formValues.driverSurname, formValues.driverFirstName,
+                        formValues.driverLicenceNumber, formValues.driverDateOfBirth, formValues.otherDriverSurname, formValues.otherDriverFirstName, formValues.otherDriverLicenceNumber,
+                        formValues.otherDriverLicencePlate, formValues.otherDriverInsurance, formValues.damageLocation, formValues.contentsList],
+                    function (q, results) {
+                        let storageNum = parseInt(localStorage.count)
+                        storageNum++
+                        let storageString = storageNum.toString()
+                        localStorage.count = storageString
+                    }
+                )
             })
             props.updateInsuranceType('submitted')
         }
@@ -138,7 +152,7 @@ const CarInsuranceForm = (props) => {
                         <Form.Group id='carInsuranceForm.ControlIncidentDate'>
                             <Form.Label>Date of incident</Form.Label>
                             <Form.Control type='text' placeholder='Date of incident' onChange={(e) => {
-                                formValues.accidentDate = e.target.value
+                                formValues.incidentDate = e.target.value
                             }}/>
                         </Form.Group>
                     </Col>
