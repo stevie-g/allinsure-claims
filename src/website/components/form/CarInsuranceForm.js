@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
 
@@ -11,7 +11,7 @@ const CarInsuranceForm = (props) => {
         driverSurname: '',
         driverFirstName: '',
         driverLicenceNumber: '',
-        driverAge: '',
+        driverDateOfBirth: '',
         otherDriverSurname: '',
         otherDriverFirstName: '',
         otherDriverLicenceNumber: '',
@@ -70,9 +70,9 @@ const CarInsuranceForm = (props) => {
                     </Col>
                     <Col>
                         <Form.Group id='carInsuranceForm.ControlDriverAge'>
-                            <Form.Label>Age</Form.Label>
-                            <Form.Control type='text' placeholder='Driver age' onChange={(e) => {
-                                formValues.driverAge = e.target.value
+                            <Form.Label>Date of Birth</Form.Label>
+                            <Form.Control type='text' placeholder='Date of birth' onChange={(e) => {
+                                formValues.driverDateOfBirth = e.target.value
                             }}/>
                         </Form.Group>
                     </Col>

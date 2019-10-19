@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './App.css'
+import * as styles from './App.css'
 import { Link, Redirect } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 

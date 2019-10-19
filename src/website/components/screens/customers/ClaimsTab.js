@@ -9,20 +9,19 @@ const ClaimsTab = (props) => {
             let claimsArray = []
             if (props.db !== null) {
                 props.db.transaction((q) => {
-                    q.executeSql('SELECT * FROM CLAIM', [], function (q, results) {
+                    q.executeSql('SELECT ID, submit_date, status FROM CAR_CLAIM;', [], function (q, results) {  // WHERE user_id = props.etc.etc
                         let length = results.rows.length, i
                         for (i = 0; i < length; i++) {
-                            let individualClaim = {
+                            let individualCarClaim = {
                                 id: '',
-                                insuranceType: '',
+                                insuranceType: 'Car',
                                 dateOfClaim: '',
                                 status: ''
                             }
-                            individualClaim.id = results.rows.item(i).id
-                            individualClaim.insuranceType = results.rows.item(i).insuranceType
-                            individualClaim.dateOfClaim = results.rows.item(i).dateOfClaim
-                            individualClaim.status = results.rows.item(i).status
-                            claimsArray.push(individualClaim)
+                            individualCarClaim.id = results.rows.item(i).ID
+                            individualCarClaim.dateOfClaim = results.rows.item(i).submit_date
+                            individualCarClaim.status = results.rows.item(i).status
+                            claimsArray.push(individualCarClaim)
                         }
                         updateClaims(claimsArray)
                     }, function (q, e) {
@@ -35,7 +34,7 @@ const ClaimsTab = (props) => {
         if (props.db.transaction) {
             fetchClaims()
         }
-    }, [props.db])
+    })
 
     if (claims.length > 0) {
         return (
