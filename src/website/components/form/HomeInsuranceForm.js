@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form, Button } from 'react-bootstrap'
+
+
+const selectOptions = ['Fire (including bushfire)', 'Water damage (including flood)', 'Other weather event', 'Theft or attempted theft', 'Non-theft property damage']
+
 
 const HomeInsuranceForm = (props) => {
     const formValues = {
@@ -10,6 +14,7 @@ const HomeInsuranceForm = (props) => {
         submitDate: new Date().toString(),
         status: 'Pending',
         staffFeedback: '',
+        additionalInfo: '',
         incidentType:'',
         incidentDate: '',
         policeReport: '',
@@ -33,8 +38,8 @@ const HomeInsuranceForm = (props) => {
         e.preventDefault()
         if (props.db) {
             props.db.transaction((q) => {
-                q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                    [formValues.id, formValues.type, formValues.userID, formValues.staffID, formValues.submitDate, formValues.status, formValues.staffFeedback, formValues.incidentType,
+                q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                    [formValues.id, formValues.type, formValues.userID, formValues.staffID, formValues.submitDate, formValues.status, formValues.staffFeedback, formValues.additionalInfo, formValues.incidentType,
                         formValues.incidentDate, formValues.policeReport, formValues.cost, formValues.accidentDescription, formValues.driverSurname, formValues.driverFirstName,
                         formValues.driverLicenceNumber, formValues.driverDateOfBirth, formValues.otherDriverSurname, formValues.otherDriverFirstName, formValues.otherDriverLicenceNumber,
                         formValues.otherDriverLicencePlate, formValues.otherDriverInsurance, formValues.damageLocation, formValues.contentsList],
@@ -52,34 +57,43 @@ const HomeInsuranceForm = (props) => {
 
     return (
         <div className='newClaimForm'>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group id='homeInsuranceForm.ControlIncidentType'>
                     <Form.Label>Type of incident</Form.Label>
-                    <Form.Control type='text' placeholder='e.g. fire, theft, etc' onChange={(e) => {
+                    <Form.Control as='select' onChange={(e) => {
                         formValues.incidentType = e.target.value
-                    }}/>
+                    }}>
+                    {selectOptions.map((title, index) => (
+                        <option key={index}>{title}</option>
+                    ))}
+                        {/* <option>Fire (including bushfire)</option>
+                        <option>Water damage (including flood)</option>
+                        <option>Other weather event</option>
+                        <option>Theft or attempted theft</option>
+                        <option>Non-theft property damage</option> */}
+                    </Form.Control>
                 </Form.Group>
                 <Form.Group id='homeInsuranceForm.ControlIncidentDate'>
-                    <Form.Label>Date of incident</Form.Label>
-                    <Form.Control type='text' placeholder='Date of incident' onChange={(e) => {
+                    <Form.Label><span>* </span>Date of incident</Form.Label>
+                    <Form.Control required type='text' placeholder='Date of incident' onChange={(e) => {
                         formValues.incidentDate = e.target.value
                     }}/>
                 </Form.Group>
                 <Form.Group id='homeInsuranceForm.ControlDamageLocation'>
                     <Form.Label>Location of damage (if applicable)</Form.Label>
-                    <Form.Control type='text' placeholder='e.g. lounge room, roof' onChange={(e) => {
+                    <Form.Control as='textarea' rows='4' placeholder='e.g. lounge room, roof' onChange={(e) => {
                         formValues.damageLocation = e.target.value
                     }}/>
                 </Form.Group>
                 <Form.Group id='homeInsuranceForm.ControlIncidentDescription'>
                     <Form.Label>Description of incident</Form.Label>
-                    <Form.Control type='text' placeholder='Describe the incident' onChange={(e) => {
+                    <Form.Control as='textarea' rows='4' placeholder='Describe the incident' onChange={(e) => {
                         formValues.incidentDescription = e.target.value
                     }}/>
                 </Form.Group>
                 <Form.Group id='homeInsuranceForm.ControlContentsList'>
                     <Form.Label>Please list damaged contents</Form.Label>
-                    <Form.Control type='text' placeholder='Contents' onChange={(e) => {
+                    <Form.Control as='textarea' rows='4' placeholder='Contents' onChange={(e) => {
                         formValues.contentsList = e.target.value
                     }}/>
                 </Form.Group>
@@ -96,9 +110,7 @@ const HomeInsuranceForm = (props) => {
                     }}/>
                 </Form.Group>
 
-                <Button variant='secondary' type='Submit' onClick={(e) => {
-                    handleSubmit(e)
-                }}>
+                <Button variant='secondary' type='Submit'>
                     Submit claim
                 </Button>
 
@@ -109,11 +121,3 @@ const HomeInsuranceForm = (props) => {
 
 export default HomeInsuranceForm
 
-{/* <Form.Control as='select'>
-<option>Glass damage only</option>
-<option>Damage in an accident</option>
-<option>Theft or attempted theft</option>
-<option>Weather or natural event</option>
-<option>Fire (including bushfire)</option>
-<option>Something else</option>
-</Form.Control> */}

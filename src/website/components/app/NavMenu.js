@@ -23,7 +23,16 @@ const NavMenu = (props) => {
     else if (props.appState.user.type === 'staff') {
         return (
             <Navbar>
-
+                <Navbar.Brand>AllInsure Claims</Navbar.Brand>
+                <Nav>
+                    <Nav.Link href='/staff'>Home</Nav.Link>
+                    <Nav.Link href='/staff/claims'>Assigned Claims</Nav.Link>
+                </Nav>
+                <Button variant='secondary' href='/' onClick={() => {
+                    localStorage.clear()
+                }}>
+                    Log out
+                </Button>
             </Navbar>
         )
     }

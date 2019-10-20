@@ -61,7 +61,7 @@ const CustomerAccount = (props) => {
                         <Form.Group as={Row} controlId='userAccountFirstName'>
                             <Form.Label column>First name</Form.Label>
                             <Col sm='10'>
-                                <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} placeholder={'Name'} defaultValue={userDetails.firstname} onChange={(e) => {
+                                <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.firstname} onChange={(e) => {
                                         newDetails.firstname = e.target.value
                                 }}/>
                             </Col>

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 
 
 const Login = (props) => {
+    const [isValid, updateIsValid] = useState(true)
     let userType = localStorage.userType
     let authenticatedUserID = ''
     const loginValues = {
@@ -29,6 +30,9 @@ const Login = (props) => {
                                 }
                             })
                         }
+                        else {
+                            updateIsValid(false)
+                        }
                     }, function (q, e) {
                         console.log(e.message)
                     })
@@ -39,7 +43,7 @@ const Login = (props) => {
                     q.executeSql('SELECT * FROM STAFF WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
                         console.log(results)
                         if (results.rows.length > 0) {
-                            authenticatedUserID = results.rows.item(0).user_ID
+                            authenticatedUserID = results.rows.item(0).staff_ID
                             localStorage.isLoggedIn = 'true'
                             localStorage.userID = authenticatedUserID
                             props.updateAppState({
@@ -99,6 +103,7 @@ const Login = (props) => {
                         loginValues.password = e.target.value
                     }}/>
                 </Form.Group>
+                {!isValid ? (<Form.Text><span style={{color: 'red'}}>Username or password is invalid</span><br /><br /></Form.Text>) : ('')}
                 <Button variant='light' type='submit' name='sub' value='Submit' onClick={(e) => {
                     handleSubmit(e)
                 }}>

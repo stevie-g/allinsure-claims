@@ -50,3 +50,7 @@
 .container {
     padding: 20px;
 }
+
+.newClaimForm span {
+    color: red;
+}

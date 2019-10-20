@@ -1,8 +1,8 @@
 import React from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
-
 const CarInsuranceForm = (props) => {
+
     const formValues = {
         id: `C000000${localStorage.count}`,
         type: 'Car',
@@ -11,6 +11,7 @@ const CarInsuranceForm = (props) => {
         submitDate: new Date().toString(),
         status: 'Pending',
         staffFeedback: '',
+        additionalInfo: '',
         incidentType:'',
         incidentDate: '',
         policeReport: '',
@@ -35,8 +36,8 @@ const CarInsuranceForm = (props) => {
         e.preventDefault()
         if (props.db) {
             props.db.transaction((q) => {
-                q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                    [formValues.id, formValues.type, formValues.userID, formValues.staffID, formValues.submitDate, formValues.status, formValues.staffFeedback, formValues.incidentType,
+                q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                    [formValues.id, formValues.type, formValues.userID, formValues.staffID, formValues.submitDate, formValues.status, formValues.staffFeedback, formValues.additionalInfo, formValues.incidentType,
                         formValues.incidentDate, formValues.policeReport, formValues.cost, formValues.accidentDescription, formValues.driverSurname, formValues.driverFirstName,
                         formValues.driverLicenceNumber, formValues.driverDateOfBirth, formValues.otherDriverSurname, formValues.otherDriverFirstName, formValues.otherDriverLicenceNumber,
                         formValues.otherDriverLicencePlate, formValues.otherDriverInsurance, formValues.damageLocation, formValues.contentsList],
@@ -53,21 +54,21 @@ const CarInsuranceForm = (props) => {
     }
     return (
         <div className='newClaimForm'>
-            <Form>
+            <Form onSubmit={handleSubmit} >
                 Who was driving the car?
                 <Row>
                     <Col>
                         <Form.Group id='carInsuranceForm.ControlDriverSurname'>
-                            <Form.Label>Surname</Form.Label>
-                            <Form.Control type='text' placeholder='Driver surname' onChange={(e) => {
+                            <Form.Label><span>* </span>Surname</Form.Label>
+                            <Form.Control required type='text' placeholder='Driver surname' onChange={(e) => {
                                 formValues.driverSurname = e.target.value
                             }}/>
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group id='carInsuranceForm.ControlDriverFirstName'>
-                            <Form.Label>First name</Form.Label>
-                            <Form.Control type='text' placeholder='Driver first name' onChange={(e) => {
+                            <Form.Label><span>* </span>First name</Form.Label>
+                            <Form.Control required type='text' placeholder='Driver first name' onChange={(e) => {
                                 formValues.driverFirstName = e.target.value
                             }}/>
                         </Form.Group>
@@ -76,30 +77,21 @@ const CarInsuranceForm = (props) => {
                 <Row>
                     <Col>
                         <Form.Group id='carInsuranceForm.ControlDriverLicenceNumber'>
-                            <Form.Label>Licence number</Form.Label>
-                            <Form.Control type='text' placeholder='Driver licence number' onChange={(e) => {
+                            <Form.Label><span>* </span>Licence number</Form.Label>
+                            <Form.Control required type='text' placeholder='Driver licence number' onChange={(e) => {
                                 formValues.driverLicenceNumber = e.target.value
                             }}/>
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group id='carInsuranceForm.ControlDriverAge'>
-                            <Form.Label>Date of Birth</Form.Label>
-                            <Form.Control type='text' placeholder='Date of birth' onChange={(e) => {
+                            <Form.Label><span>* </span>Date of Birth</Form.Label>
+                            <Form.Control required type='text' placeholder='Date of birth' onChange={(e) => {
                                 formValues.driverDateOfBirth = e.target.value
                             }}/>
                         </Form.Group>
                     </Col>
                 </Row>
-                {/* <Form.Group id='carInsuranceForm.ControlOtherDriverRadio'>
-                    <Form.Label>Details of the other driver (if available)</Form.Label>
-                    <Form.Check type='radio' label='Yes' name='otherDriverRadio' id='otherDriverRadio1' onChange={() => {
-                        displayOtherDriver(true)
-                    }}/>
-                    <Form.Check inline type='radio' label='No' name='otherDriverRadio' id='otherDriverRadio2' onChange={() => {
-                        displayOtherDriver(false)
-                    }}/>
-                </Form.Group> */}
                 Details of the other driver (if known)
                 <Row>
                     <Col>
@@ -150,8 +142,8 @@ const CarInsuranceForm = (props) => {
                 <Row>
                     <Col>
                         <Form.Group id='carInsuranceForm.ControlIncidentDate'>
-                            <Form.Label>Date of incident</Form.Label>
-                            <Form.Control type='text' placeholder='Date of incident' onChange={(e) => {
+                            <Form.Label><span>* </span>Date of incident</Form.Label>
+                            <Form.Control required type='text' placeholder='Date of incident' onChange={(e) => {
                                 formValues.incidentDate = e.target.value
                             }}/>
                         </Form.Group>
@@ -167,13 +159,11 @@ const CarInsuranceForm = (props) => {
                 </Row>
                 <Form.Group id='carInsuranceForm.ControlOtherSelectDescription'>
                     <Form.Label>Please give a brief description of the incident</Form.Label>
-                    <Form.Control type='text' placeholder='Enter description here' onChange={(e) => {
+                    <Form.Control as='textarea' rows='4' placeholder='Enter description here' onChange={(e) => {
                         formValues.accidentDescription = e.target.value
                     }}/>
                 </Form.Group>
-                <Button variant='secondary' type='Submit' onClick={(e) => {
-                    handleSubmit(e)
-                }}>
+                <Button variant='secondary' type='submit'>
                     Submit claim
                 </Button>
 
