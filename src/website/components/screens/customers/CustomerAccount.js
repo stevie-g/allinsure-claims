@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-// import { Redirect } from 'react-router-dom'
-import { Container, Card, Form, Row, Col, Button } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
+import { Container, Card, Form, Row, Col, Button, Spinner } from 'react-bootstrap'
 
 const CustomerAccount = (props) => {
-    const [userDetails, updateUserDetails] = useState({})
+    const [userDetails, updateUserDetails] = useState()
     const [isEditable, updateIsEditable] = useState(false)
     let newDetails = {
         firstname: '',
@@ -51,70 +51,77 @@ const CustomerAccount = (props) => {
         }
     }
 
+    if (props.appState.isLoggedIn && props.appState.user.type === 'customer') {
+        if (userDetails) {
+            return (
+                <Container>
+                    <Card>
+                        <Card.Header>Your details</Card.Header>
+                        <Form>
+                            <Form.Group as={Row} controlId='userAccountFirstName'>
+                                <Form.Label column>First name</Form.Label>
+                                <Col sm='10'>
+                                    <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.firstname} onChange={(e) => {
+                                            newDetails.firstname = e.target.value
+                                    }}/>
+                                </Col>
+                            </Form.Group>
 
-    if (userDetails) {
-        return (
-            <Container>
-                <Card>
-                    <Card.Header>Your details</Card.Header>
-                    <Form>
-                        <Form.Group as={Row} controlId='userAccountFirstName'>
-                            <Form.Label column>First name</Form.Label>
-                            <Col sm='10'>
-                                <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.firstname} onChange={(e) => {
-                                        newDetails.firstname = e.target.value
-                                }}/>
-                            </Col>
-                        </Form.Group>
+                            <Form.Group as={Row} controlId='userAccountLastName'>
+                                <Form.Label column>Last name</Form.Label>
+                                <Col sm='10'>
+                                    <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.lastname} onChange={(e) => {
+                                        newDetails.lastname = e.target.value
+                                    }}/>
+                                </Col>
+                            </Form.Group>
 
-                        <Form.Group as={Row} controlId='userAccountLastName'>
-                            <Form.Label column>Last name</Form.Label>
-                            <Col sm='10'>
-                                <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.lastname} onChange={(e) => {
-                                    newDetails.lastname = e.target.value
-                                }}/>
-                            </Col>
-                        </Form.Group>
+                            <Form.Group as={Row} controlId='userAccountEmail'>
+                                <Form.Label column>Email</Form.Label>
+                                <Col sm='10'>
+                                    <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.email} onChange={(e) => {
+                                        newDetails.email = e.target.value
+                                    }}/>
+                                </Col>
+                            </Form.Group>
 
-                        <Form.Group as={Row} controlId='userAccountEmail'>
-                            <Form.Label column>Email</Form.Label>
-                            <Col sm='10'>
-                                <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.email} onChange={(e) => {
-                                    newDetails.email = e.target.value
-                                }}/>
-                            </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} controlId='userAccountPhone'>
-                            <Form.Label column>Phone number</Form.Label>
-                            <Col sm='10'>
-                                <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.phone} onChange={(e) => {
-                                    newDetails.phone = e.target.value
-                                }}/>
-                            </Col>
-                        </Form.Group>
-                    </Form>
-                    <Button variant='secondary' onClick={() => updateIsEditable(!isEditable)}>
-                        {!isEditable ? 'Edit details' : 'Cancel'}
-                    </Button>
-                    {isEditable ? (
-                        <Button variant='primary' type='Submit' onClick={(e) => handleSubmit(e)}>
-                            Save changes
+                            <Form.Group as={Row} controlId='userAccountPhone'>
+                                <Form.Label column>Phone number</Form.Label>
+                                <Col sm='10'>
+                                    <Form.Control plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={userDetails.phone} onChange={(e) => {
+                                        newDetails.phone = e.target.value
+                                    }}/>
+                                </Col>
+                            </Form.Group>
+                        </Form>
+                        <Button variant='secondary' onClick={() => updateIsEditable(!isEditable)}>
+                            {!isEditable ? 'Edit details' : 'Cancel'}
                         </Button>
-                    ) : (
-                        ''
-                    )}
-                </Card>
-            </Container>
-        )
+                        {isEditable ? (
+                            <Button variant='primary' type='Submit' onClick={(e) => handleSubmit(e)}>
+                                Save changes
+                            </Button>
+                        ) : (
+                            ''
+                        )}
+                    </Card>
+                </Container>
+            )
+        }
+        else {
+            return (
+                <Spinner animation='border' variant='secondary' />
+            )
+        }
     }
     else {
-        return ( 'hi'
-            // <Redirect to={{
-            //     pathname: '/',
-            //     state: { from: props.location }
-            // }}
-            // />
+        localStorage.userType = 'customer'
+        return (
+            <Redirect to={{
+                pathname: '/login',
+                state: { from: props.location }
+            }}
+            />
         )
     }
 }

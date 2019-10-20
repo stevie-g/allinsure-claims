@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap'
 
 
 const Login = (props) => {
+    console.log('login props', props)
     const [isValid, updateIsValid] = useState(true)
     let userType = localStorage.userType
     let authenticatedUserID = ''
@@ -69,8 +70,12 @@ const Login = (props) => {
 
     // should redirect to page they came from
     if (props.appState.isLoggedIn) {
-        //switch
-        if (props.appState.user.type === 'customer') {
+        if (props.location.state) {
+            return (
+                <Redirect to={props.location.state.from.pathname} />
+            )
+        }
+        else if (props.appState.user.type === 'customer') {
             console.log('redirecting customer')
             return (
                 <Redirect to='/customer' />

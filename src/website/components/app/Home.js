@@ -4,6 +4,10 @@ import { Link, Redirect } from 'react-router-dom'
 import { Col, Row } from 'react-bootstrap'
 
 const Home = (props) => {
+    console.log('home props', props)
+    const fromUrl = props.location.state ? props.location.state.from.pathname : ''
+    console.log(fromUrl)
+    // if props.location.state.from is not undefined, redirect?
     // should be wherever they came from
     if (props.appState.isLoggedIn && props.appState.user.type === 'customer' && props.appState.user.id !== null) {
         console.log(props)
@@ -22,7 +26,7 @@ const Home = (props) => {
             <div className='home'>
                 <Row>
                     <Col>
-                        <Link to='/login' onClick={() => {
+                        <Link to={{pathname: '/login', state: {from: {pathname: fromUrl} }}} onClick={() => {
                             props.updateAppState({
                                 isLoggedIn: false,
                                 user: {

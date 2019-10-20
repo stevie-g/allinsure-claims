@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Table, Card, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Table, Card, Button, Spinner } from 'react-bootstrap'
+import { Link, Redirect } from 'react-router-dom'
 
 const isActive = (claim) => {
     return (claim.status === 'Pending' || claim.status === 'Approved' || claim.status === 'Provide more information')
 }
 
 const CustomerClaims = (props) => {
-    const [claims, updateClaims] = useState([])
+    const [claims, updateClaims] = useState()
 
     useEffect(() => {
         const fetchClaims = () => {
@@ -43,66 +43,76 @@ const CustomerClaims = (props) => {
         }
     }, [props.appState, props.db])
 
-    if (claims.length > 0) {
-        return (
-            <Container>
-                <Card>
-                    <Button variant='secondary' href='/customer/newclaim'>
-                        New claim
-                    </Button>
-                    <h3>Active claims</h3>
-                    <Table>
+    if (props.appState.isLoggedIn && props.appState.user.type === 'customer') {
+        if (claims) {
+            return (
+                <Container>
+                    <Card>
+                        <Button variant='secondary' href='/customer/newclaim'>
+                            New claim
+                        </Button>
+                        <h3>Active claims</h3>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Claim ID</th>
+                                    <th>Insurance Type</th>
+                                    <th>Date of claim</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {claims.filter((claim) => isActive(claim)).map((claim, index) => (
+                                    <tr key={index}>
+                                        <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
+                                        <td>{claim.insuranceType}</td>
+                                        <td>{claim.dateOfClaim}</td>
+                                        <td>{claim.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Card>
+                    <Card>
+                        <h3>History</h3>
+                        <Table>
                         <thead>
-                            <tr>
-                                <th>Claim ID</th>
-                                <th>Insurance Type</th>
-                                <th>Date of claim</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {claims.filter((claim) => isActive(claim)).map((claim, index) => (
-                                <tr key={index}>
-                                    <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
-                                    <td>{claim.insuranceType}</td>
-                                    <td>{claim.dateOfClaim}</td>
-                                    <td>{claim.status}</td>
+                                <tr>
+                                    <th>Claim ID</th>
+                                    <th>Insurance Type</th>
+                                    <th>Date of claim</th>
+                                    <th>Status</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                </Card>
-                <Card>
-                    <h3>History</h3>
-                    <Table>
-                    <thead>
-                            <tr>
-                                <th>Claim ID</th>
-                                <th>Insurance Type</th>
-                                <th>Date of claim</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {claims.filter((claim) => !isActive(claim)).map((claim, index) => (
-                                <tr key={index}>
-                                    <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
-                                    <td>{claim.insuranceType}</td>
-                                    <td>{claim.dateOfClaim}</td>
-                                    <td>{claim.status}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                </Card>
-            </Container>
-        )
+                            </thead>
+                            <tbody>
+                                {claims.filter((claim) => !isActive(claim)).map((claim, index) => (
+                                    <tr key={index}>
+                                        <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
+                                        <td>{claim.insuranceType}</td>
+                                        <td>{claim.dateOfClaim}</td>
+                                        <td>{claim.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Card>
+                </Container>
+            )
+        }
+        else {
+            return (
+                <Spinner animation='border' variant='secondary' />
+            )
+        }
     }
     else {
+        localStorage.userType = 'customer'
         return (
-            <Container>
-                There are no claims to view.
-            </Container>
+            <Redirect to={{
+                pathname: '/login',
+                state: { from: props.location }
+            }}
+            />
         )
     }
 }

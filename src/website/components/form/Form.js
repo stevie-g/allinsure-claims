@@ -16,7 +16,7 @@ const Form = (props) => {
         case 'submitted':
             return (
                 <div>
-                    Your claim has been submitted!
+                    Your claim has been submitted
                     <div>
                         <Button variant='outline-secondary' href='/customer'>
                             Return home

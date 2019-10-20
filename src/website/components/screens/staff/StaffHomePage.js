@@ -22,17 +22,18 @@ const StaffHomePage = (props) => {
         }
     }, [props.appState, props.db])
 
-    if (props.appState && props.appState.isLoggedIn) {
+    if (props.appState.isLoggedIn && props.appState.user.type === 'staff') {
         return (
             <div>
-                {(firstName ? (<h3>Hi {firstName}</h3>) : <h3>''</h3>)}
+                {(firstName ? (<h3>Hi {firstName}</h3>) : '')}
             </div>
         )
     }
     else {
+        localStorage.userType = 'staff'
         return (
             <Redirect to={{
-                pathname: '/',
+                pathname: '/login',
                 state: { from: props.location }
             }}
             />

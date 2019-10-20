@@ -35,7 +35,7 @@ function App() {
             localStorage.userID = 'unknown'
         }
         if (!localStorage.count) {
-            localStorage.count = '5'
+            localStorage.count = '7'
         }
         let loginState = false
         if (localStorage.isLoggedIn === 'true') {

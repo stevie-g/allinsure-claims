@@ -36,6 +36,9 @@ const NavMenu = (props) => {
             </Navbar>
         )
     }
+    else { //place holder
+        return <div></div>
+    }
 }
 
 export default NavMenu

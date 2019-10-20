@@ -24,7 +24,7 @@ const CustomerHome = (props) => {
     if (props.appState && props.appState.isLoggedIn) {
         return (
             <div>
-                {(firstName ? (<h3>Welcome back {firstName}</h3>) : <h3>''</h3>)}
+                {(firstName ? (<h3>Welcome back {firstName}</h3>) : '')}
             </div>
             
         )
