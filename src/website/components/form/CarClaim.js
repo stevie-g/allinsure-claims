@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import { Form, Row, Col, Button, Container, Card } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 
 const isActive = (claim) => {
@@ -152,176 +152,186 @@ const CarClaim = (props) => {
     if (props.appState.isLoggedIn) {
         if (!isSubmitted) {
             return (
-                <div>
-                    <Form>
-                        <Row>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlDriverSurname'>
-                                    <Form.Label>Surname</Form.Label>
-                                    <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverSurname} onChange={(e) => {
-                                        formValues.driverSurname = e.target.value
+                <div classname='customer-home'>
+                    <Container>
+                        <Card>
+                            <Form>
+                                <Row>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlDriverSurname'>
+                                            <Form.Label>Surname</Form.Label>
+                                            <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverSurname} onChange={(e) => {
+                                                formValues.driverSurname = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlDriverFirstName'>
+                                            <Form.Label>First name</Form.Label>
+                                            <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverFirstName} onChange={(e) => {
+                                                formValues.driverFirstName = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlDriverLicenceNumber'>
+                                            <Form.Label>Licence number</Form.Label>
+                                            <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverLicenceNumber} onChange={(e) => {
+                                                formValues.driverLicenceNumber = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlDriverAge'>
+                                            <Form.Label>Date of Birth</Form.Label>
+                                            <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverDateOfBirth} onChange={(e) => {
+                                                formValues.driverDateOfBirth = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                Details of the other driver
+                                <Row>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlOtherDriverSurname'>
+                                            <Form.Label>Surname</Form.Label>
+                                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverSurname} onChange={(e) => {
+                                                formValues.otherDriverSurname = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlOtherDriverFirstName'>
+                                            <Form.Label>First name</Form.Label>
+                                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverFirstName} onChange={(e) => {
+                                                formValues.otherDriverFirstName = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlOtherDriverLicenceNumber'>
+                                            <Form.Label>Licence number</Form.Label>
+                                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverLicenceNumber} onChange={(e) => {
+                                                formValues.otherDriverLicenceNumber = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlOtherDriverLicencePlate'>
+                                            <Form.Label>Licence plate</Form.Label>
+                                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverLicencePlate} onChange={(e) => {
+                                                formValues.otherDriverLicencePlate = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlOtherDriverInsurance'>
+                                            <Form.Label>Insurance provider (if known)</Form.Label>
+                                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverInsurance} onChange={(e) => {
+                                                formValues.otherDriverInsurance= e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlIncidentDate'>
+                                            <Form.Label>Date of incident</Form.Label>
+                                            <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.incidentDate} onChange={(e) => {
+                                                formValues.incidentDate = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group id='carInsuranceForm.ControlPoliceReport'>
+                                            <Form.Label>Police report number</Form.Label>
+                                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.policeReport} onChange={(e) => {
+                                                formValues.policeReport = e.target.value
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Form.Group id='carInsuranceForm.ControlOtherSelectDescription'>
+                                    <Form.Label>Description given</Form.Label>
+                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.accidentDescription} onChange={(e) => {
+                                        formValues.accidentDescription = e.target.value
                                     }}/>
                                 </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlDriverFirstName'>
-                                    <Form.Label>First name</Form.Label>
-                                    <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverFirstName} onChange={(e) => {
-                                        formValues.driverFirstName = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlDriverLicenceNumber'>
-                                    <Form.Label>Licence number</Form.Label>
-                                    <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverLicenceNumber} onChange={(e) => {
-                                        formValues.driverLicenceNumber = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlDriverAge'>
-                                    <Form.Label>Date of Birth</Form.Label>
-                                    <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.driverDateOfBirth} onChange={(e) => {
-                                        formValues.driverDateOfBirth = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        Details of the other driver
-                        <Row>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlOtherDriverSurname'>
-                                    <Form.Label>Surname</Form.Label>
-                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverSurname} onChange={(e) => {
-                                        formValues.otherDriverSurname = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlOtherDriverFirstName'>
-                                    <Form.Label>First name</Form.Label>
-                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverFirstName} onChange={(e) => {
-                                        formValues.otherDriverFirstName = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlOtherDriverLicenceNumber'>
-                                    <Form.Label>Licence number</Form.Label>
-                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverLicenceNumber} onChange={(e) => {
-                                        formValues.otherDriverLicenceNumber = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlOtherDriverLicencePlate'>
-                                    <Form.Label>Licence plate</Form.Label>
-                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverLicencePlate} onChange={(e) => {
-                                        formValues.otherDriverLicencePlate = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlOtherDriverInsurance'>
-                                    <Form.Label>Insurance provider (if known)</Form.Label>
-                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.otherDriverInsurance} onChange={(e) => {
-                                        formValues.otherDriverInsurance= e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlIncidentDate'>
-                                    <Form.Label>Date of incident</Form.Label>
-                                    <Form.Control required type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.incidentDate} onChange={(e) => {
-                                        formValues.incidentDate = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                            <Col>
-                                <Form.Group id='carInsuranceForm.ControlPoliceReport'>
-                                    <Form.Label>Police report number</Form.Label>
-                                    <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.policeReport} onChange={(e) => {
-                                        formValues.policeReport = e.target.value
-                                    }}/>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Form.Group id='carInsuranceForm.ControlOtherSelectDescription'>
-                            <Form.Label>Description given</Form.Label>
-                            <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.accidentDescription} onChange={(e) => {
-                                formValues.accidentDescription = e.target.value
-                            }}/>
-                        </Form.Group>
-                        {claimValues.staffFeedback && props.appState.user.type === 'customer' ? (
-                            <Form.Group id='carInsuranceForm.AdditionalInfo'>
-                                <Form.Label>{claimValues.staffFeedback}</Form.Label>
-                                <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.additionalInfo} onChange={(e) => {
-                                    formValues.additionalInfo = e.target.value
-                                }}/>
-                            </Form.Group>
-                        ) : (claimValues.staffFeedback || requestsInfo) && props.appState.user.type === 'staff' ? (
-                            <Form.Group id='carInsuranceForm.RequestInfo'>
-                                <Form.Label>Provide a message to the customer:</Form.Label>
-                                <Form.Control type='text' plaintext defaultValue={claimValues.staffFeedback} onChange={(e) => {
-                                    formValues.staffFeedback = e.target.value
-                                }}/>
-                            </Form.Group>
-                        ) : (
-                            ''
-                        )}
-                        {(props.appState.user.type === 'customer' && isActive(claimValues)) ? (
-                            <div>
-                                <Button variant='secondary' onClick={() => updateIsEditable(!isEditable)}>
-                                    {!isEditable ? 'Edit details' : 'Cancel'}
-                                </Button>
-                                {isEditable ? (
-                                    <Button variant='primary' type='Submit' onClick={(e) => handleSubmit(e)}>
-                                        Save changes
-                                    </Button>
+                                {claimValues.staffFeedback && props.appState.user.type === 'customer' ? (
+                                    <Form.Group id='carInsuranceForm.AdditionalInfo'>
+                                        <Form.Label>{claimValues.staffFeedback}</Form.Label>
+                                        <Form.Control type='text' plaintext {...(!isEditable ? {readOnly:true} : {})} defaultValue={claimValues.additionalInfo} onChange={(e) => {
+                                            formValues.additionalInfo = e.target.value
+                                        }}/>
+                                    </Form.Group>
+                                ) : (claimValues.staffFeedback || requestsInfo) && props.appState.user.type === 'staff' ? (
+                                    <Form.Group id='carInsuranceForm.RequestInfo'>
+                                        <Form.Label>Provide a message to the customer:</Form.Label>
+                                        <Form.Control type='text' plaintext defaultValue={claimValues.staffFeedback} onChange={(e) => {
+                                            formValues.staffFeedback = e.target.value
+                                        }}/>
+                                    </Form.Group>
                                 ) : (
                                     ''
                                 )}
-                            </div>
-                        ) : props.appState.user.type === 'staff' ? (
-                            <div>
-                                <Button variant='danger' onClick={() => updateStatus('Denied')}>
-                                    Deny
-                                </Button>
-                                <Button variant='secondary' onClick={() => {
-                                    if (!formValues.staffFeedback) updateRequestsInfo(true)
-                                    else handleRequestForInfo()
-                                }}>
-                                    {(!requestsInfo ? (<span>Request more information</span>) : (<span>Save changes</span>))}
-                                </Button>
-                                <Button variant='success' onClick={() => updateStatus('Approved')}>
-                                    Approve
-                                </Button>
-                            </div>
-                        ) : (
-                            ''
-                        )}
-                    </Form>
+                                {(props.appState.user.type === 'customer' && isActive(claimValues)) ? (
+                                    <div>
+                                        <Button variant='secondary' onClick={() => updateIsEditable(!isEditable)}>
+                                            {!isEditable ? 'Edit details' : 'Cancel'}
+                                        </Button>
+                                        {isEditable ? (
+                                            <Button variant='primary' type='Submit' onClick={(e) => handleSubmit(e)}>
+                                                Save changes
+                                            </Button>
+                                        ) : (
+                                            ''
+                                        )}
+                                    </div>
+                                ) : props.appState.user.type === 'staff' ? (
+                                    <div>
+                                        <Button variant='danger' onClick={() => updateStatus('Denied')}>
+                                            Deny
+                                        </Button>
+                                        <Button variant='secondary' onClick={() => {
+                                            if (!formValues.staffFeedback) updateRequestsInfo(true)
+                                            else handleRequestForInfo()
+                                        }}>
+                                            {(!requestsInfo ? (<span>Request more information</span>) : (<span>Save changes</span>))}
+                                        </Button>
+                                        <Button variant='success' onClick={() => updateStatus('Approved')}>
+                                            Approve
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    ''
+                                )}
+                            </Form>
+                        </Card>
+                    </Container>
+                    
                 </div>
             )
         }
         else {
             return (
-                <div>
-                    Your changes have been saved
-                    <div>
-                        <Button variant='outline-secondary' href={`/${props.appState.user.type}`}>
-                            Return home
-                        </Button>
-                    </div>
+                <div className='customer-home'>
+                    <Container>
+                        <Card>
+                            Your changes have been saved.
+                            <div>
+                                <Button variant='outline-secondary' href={`/${props.appState.user.type}`}>
+                                    Return home
+                                </Button>
+                            </div>
+                        </Card>
+                    </Container>
+                    
                 </div>
             )
         }

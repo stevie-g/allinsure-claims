@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Container, Card } from 'react-bootstrap'
 
 
 const Login = (props) => {
@@ -8,6 +8,10 @@ const Login = (props) => {
     const [isValid, updateIsValid] = useState(true)
     let userType = localStorage.userType
     let authenticatedUserID = ''
+    const initialValues = {
+        username: '',
+        password: ''
+    }
     const loginValues = {
         username: '',
         password: ''
@@ -55,6 +59,9 @@ const Login = (props) => {
                                 }
                             })
                         }
+                        else {
+                            updateIsValid(false)
+                        }
                     }, function (q, e) {
                         console.log(e.message)
                     })
@@ -64,11 +71,11 @@ const Login = (props) => {
     }
 
     const handleSubmit = (e) => {
+        console.log(loginValues)
         e.preventDefault()
         authenticateUser(loginValues)
     }
 
-    // should redirect to page they came from
     if (props.appState.isLoggedIn) {
         if (props.location.state) {
             return (
@@ -95,26 +102,32 @@ const Login = (props) => {
     }
     else {
         return (
-            <Form className='loginForm' onSubmit={handleSubmit}>
-                <Form.Group controlId='loginFormUsername'>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type='text' placeholder='Enter username' name='username' onChange={(e) => {
-                        loginValues.username = e.target.value
-                    }}/>
-                </Form.Group>
-                <Form.Group controlId='loginFormPassword'>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type='password' placeholder='Enter password' name='password' onChange={(e) => {
-                        loginValues.password = e.target.value
-                    }}/>
-                </Form.Group>
-                {!isValid ? (<Form.Text><span style={{color: 'red'}}>Username or password is invalid</span><br /><br /></Form.Text>) : ('')}
-                <Button variant='light' type='submit' name='sub' value='Submit' onClick={(e) => {
-                    handleSubmit(e)
-                }}>
-                    Log in
-                </Button>
-            </Form>
+            <div className='login'>
+                <Container>
+                    <Card>
+                        <Form className='loginForm' onSubmit={handleSubmit}>
+                            <Form.Group controlId='loginFormUsername'>
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control type='text' placeholder='Enter username' name='username' onChange={(e) => {
+                                    loginValues.username = e.target.value
+                                }}/>
+                            </Form.Group>
+                            <Form.Group controlId='loginFormPassword'>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type='password' placeholder='Enter password' name='password' onChange={(e) => {
+                                    loginValues.password = e.target.value
+                                }}/>
+                            </Form.Group>
+                            {!isValid ? (<Form.Text><span style={{color: 'red'}}>Username or password is invalid</span><br /><br /></Form.Text>) : ('')}
+                            <Button variant='light' type='submit' name='sub' value='Submit' onClick={(e) => {
+                                handleSubmit(e)
+                            }}>
+                                Log in
+                            </Button>
+                        </Form>
+                    </Card>
+                </Container>
+            </div>
         )
     }
 }

@@ -46,62 +46,68 @@ const CustomerClaims = (props) => {
     if (props.appState.isLoggedIn && props.appState.user.type === 'customer') {
         if (claims) {
             return (
-                <Container>
-                    <Card>
-                        <Button variant='secondary' href='/customer/newclaim'>
-                            New claim
-                        </Button>
-                        <h3>Active claims</h3>
-                        <Table>
+                <div className='customer-home'>
+                    <Container>
+                        <Card>
+                            <Button className='button-edit' variant='primary' href='/customer/newclaim'>
+                                New claim
+                            </Button>
+                            <h3>Active claims</h3>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Claim ID</th>
+                                        <th>Insurance Type</th>
+                                        <th>Date of claim</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {claims.filter((claim) => isActive(claim)).map((claim, index) => (
+                                        <tr key={index}>
+                                            <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
+                                            <td>{claim.insuranceType}</td>
+                                            <td>{claim.dateOfClaim}</td>
+                                            <td>{claim.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Card>
+                        <Card>
+                            <h3>History</h3>
+                            <Table>
                             <thead>
-                                <tr>
-                                    <th>Claim ID</th>
-                                    <th>Insurance Type</th>
-                                    <th>Date of claim</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {claims.filter((claim) => isActive(claim)).map((claim, index) => (
-                                    <tr key={index}>
-                                        <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
-                                        <td>{claim.insuranceType}</td>
-                                        <td>{claim.dateOfClaim}</td>
-                                        <td>{claim.status}</td>
+                                    <tr>
+                                        <th>Claim ID</th>
+                                        <th>Insurance Type</th>
+                                        <th>Date of claim</th>
+                                        <th>Status</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    </Card>
-                    <Card>
-                        <h3>History</h3>
-                        <Table>
-                        <thead>
-                                <tr>
-                                    <th>Claim ID</th>
-                                    <th>Insurance Type</th>
-                                    <th>Date of claim</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {claims.filter((claim) => !isActive(claim)).map((claim, index) => (
-                                    <tr key={index}>
-                                        <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
-                                        <td>{claim.insuranceType}</td>
-                                        <td>{claim.dateOfClaim}</td>
-                                        <td>{claim.status}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    </Card>
-                </Container>
+                                </thead>
+                                <tbody>
+                                    {claims.filter((claim) => !isActive(claim)).map((claim, index) => (
+                                        <tr key={index}>
+                                            <td><Link to={`/claim/${claim.id}`}>{claim.id}</Link></td>
+                                            <td>{claim.insuranceType}</td>
+                                            <td>{claim.dateOfClaim}</td>
+                                            <td>{claim.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Card>
+                    </Container>
+                </div>
             )
         }
         else {
             return (
-                <Spinner animation='border' variant='secondary' />
+                <div className='customer-home'>
+                    <Container>
+                        <Spinner animation='border' variant='secondary' />
+                    </Container>
+                </div>
             )
         }
     }

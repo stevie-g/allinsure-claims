@@ -1,7 +1,7 @@
 import React from 'react'
 import * as styles from './App.css'
 import { Link, Redirect } from 'react-router-dom'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Container } from 'react-bootstrap'
 
 const Home = (props) => {
     console.log('home props', props)
@@ -24,32 +24,37 @@ const Home = (props) => {
     else {
         return (
             <div className='home'>
-                <Row>
-                    <Col>
-                        <Link to={{pathname: '/login', state: {from: {pathname: fromUrl} }}} onClick={() => {
-                            props.updateAppState({
-                                isLoggedIn: false,
-                                user: {
-                                    type: 'customer',
-                                    id: ''
-                                }
-                            })
-                            localStorage.userType = 'customer'
-                        }}>Customers</Link>
-                    </Col>
-                    <Col>
-                        <Link to='/login' onClick={() => {
-                            props.updateAppState({
-                                isLoggedIn: false,
-                                user: {
-                                    type: 'staff',
-                                    id: ''
-                                }
-                            })
-                            localStorage.userType = 'staff'
-                        }}>Staff</Link>
-                    </Col>
-                </Row>
+                <Container className='home-text'>
+                    <Row>
+                        <Col><h1>AllInsure</h1></Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Link to={{pathname: '/login', state: {from: {pathname: fromUrl} }}} onClick={() => {
+                                props.updateAppState({
+                                    isLoggedIn: false,
+                                    user: {
+                                        type: 'customer',
+                                        id: ''
+                                    }
+                                })
+                                localStorage.userType = 'customer'
+                            }}>Customers</Link>
+                        </Col>
+                        <Col>
+                            <Link to={{pathname: '/login', state: {from: {pathname: fromUrl} }}} onClick={() => {
+                                props.updateAppState({
+                                    isLoggedIn: false,
+                                    user: {
+                                        type: 'staff',
+                                        id: ''
+                                    }
+                                })
+                                localStorage.userType = 'staff'
+                            }}>Staff</Link>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }

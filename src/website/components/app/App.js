@@ -12,6 +12,7 @@ import HomeClaim from '../form/HomeClaim'
 import Home from './Home'
 import Login from './Login'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 
 function App() {
     const [db, updateDb] = useState({})
@@ -57,9 +58,9 @@ function App() {
         const initialiseDatabase = () => {
             let dbresult = openDatabase('localdb', '1.0', 'Customer Database', 2 * 2014 * 1024)
             dbresult.transaction((q) => {
-                q.executeSql('DROP TABLE CUSTOMER;')
-                q.executeSql('DROP TABLE STAFF;')
-                q.executeSql('DROP TABLE CLAIM;')
+                // q.executeSql('DROP TABLE CUSTOMER;')
+                // q.executeSql('DROP TABLE STAFF;')
+                // q.executeSql('DROP TABLE CLAIM;')
             })
             dbresult.transaction((q) => {
                 q.executeSql('CREATE TABLE IF NOT EXISTS CUSTOMER (user_ID unique, username, firstname, lastname, password, phonenumber, address, email);')
@@ -73,7 +74,7 @@ function App() {
             })
             dbresult.transaction((q) => {
                 q.executeSql('CREATE TABLE IF NOT EXISTS CLAIM (ID unique, type, user_ID, staff_ID, submit_date, status, staff_feedback, more_info, incident_type, incident_date, police_report, cost, description, driver_surname, driver_firstname, driver_licence_number, driver_dob, otherdriver_surname, otherdriver_firstname, otherdriver_licence_number, otherdriver_licence_plate, otherdriver_insurance, damage_location, contents_list);')
-                q.executeSql('INSERT INTO CLAIM VALUES ("C0000001", "Car", "001", "001", "20/10/2019", "Pending", "", "", "", "15/10/19", "", "", "side-swiped at the traffic lights", "Sloan", "Meg", "9995551", "1/1/2000", "Jackson", "Mike", "", "CBU329", "NRMA", "", "");')
+                q.executeSql('INSERT INTO CLAIM VALUES ("C0000001", "Car", "001", "001", "20/10/2019", "Provide more information", "Please provide police report", "", "", "15/10/19", "", "", "He side-swiped at the traffic lights", "Sloan", "Meg", "9995551", "1/1/2000", "Jackson", "Mike", "", "CBU329", "NRMA", "", "");')
                 q.executeSql('INSERT INTO CLAIM VALUES ("H0000002", "Home", "001", "002", "30/10/2018", "Resolved", "", "", "Theft or attempted theft", "28/10/2018", "ADBUDFI3238GFH09", "3000", "My computer was stolen", "", "", "", "", "", "", "", "", "", "", "Laptop");')
                 q.executeSql('INSERT INTO CLAIM VALUES ("H0000003", "Home", "001", "001", "5/12/2010", "Resolved", "", "", "Other weather event", "01/11/2010", "DLFDSHDF45347839", "10000", "Lightning struck the roof", "", "", "", "", "", "", "", "", "", "Roof at front of house", "TV, couch, entertainment unit");')
                 
@@ -88,9 +89,10 @@ function App() {
 
     return (
         <div>
-            {appState && appState.isLoggedIn ? (
-                <NavMenu appState={appState} updateAppState={updateAppState} db={db} />
-            ) : ''
+            {appState.isLoggedIn && appState.user.type && appState.user.id &&
+               
+                    <NavMenu appState={appState} updateAppState={updateAppState} db={db} />
+               
             }
             <Router>
                 <Switch>

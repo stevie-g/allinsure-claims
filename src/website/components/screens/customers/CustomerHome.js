@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
+import { Container, Card } from 'react-bootstrap'
 
 const CustomerHome = (props) => {
     console.log('home', props)
@@ -21,10 +22,17 @@ const CustomerHome = (props) => {
         }
     }, [props.appState, props.db])
 
-    if (props.appState && props.appState.isLoggedIn) {
+    if (props.appState.isLoggedIn && props.appState.user.type === 'customer') {
         return (
-            <div>
-                {(firstName ? (<h3>Welcome back {firstName}</h3>) : '')}
+            <div className='customer-home'>
+                <Container>
+                    <Card>
+                        {(firstName ? (<h3>Welcome back {firstName}</h3>) : '')}
+                    </Card>
+                    <Card>
+                        <Card.Title>Important Announcements</Card.Title>
+                    </Card>
+                </Container>
             </div>
             
         )

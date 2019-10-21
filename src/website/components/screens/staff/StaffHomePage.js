@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
+import { Container, Card } from 'react-bootstrap'
 
 const StaffHomePage = (props) => {
     console.log('home', props)
@@ -24,16 +24,22 @@ const StaffHomePage = (props) => {
 
     if (props.appState.isLoggedIn && props.appState.user.type === 'staff') {
         return (
-            <div>
-                {(firstName ? (<h3>Hi {firstName}</h3>) : '')}
+            <div className='customer-home'>
+                <Container>
+                    <Card>
+                        {(firstName ? (<h3>Welcome back {firstName}</h3>) : '')}
+                    </Card>
+                    <Card>
+                        <Card.Title>Important Announcements</Card.Title>
+                    </Card>
+                </Container>
             </div>
         )
     }
     else {
-        localStorage.userType = 'staff'
         return (
             <Redirect to={{
-                pathname: '/login',
+                pathname: '/',
                 state: { from: props.location }
             }}
             />
