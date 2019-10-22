@@ -58,9 +58,9 @@ function App() {
         const initialiseDatabase = () => {
             let dbresult = openDatabase('localdb', '1.0', 'Customer Database', 2 * 2014 * 1024)
             dbresult.transaction((q) => {
-                // q.executeSql('DROP TABLE CUSTOMER;')
-                // q.executeSql('DROP TABLE STAFF;')
-                // q.executeSql('DROP TABLE CLAIM;')
+                q.executeSql('DROP TABLE CUSTOMER;')
+                q.executeSql('DROP TABLE STAFF;')
+                q.executeSql('DROP TABLE CLAIM;')
             })
             dbresult.transaction((q) => {
                 q.executeSql('CREATE TABLE IF NOT EXISTS CUSTOMER (user_ID unique, username, firstname, lastname, password, phonenumber, address, email);')

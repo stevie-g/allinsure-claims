@@ -8,10 +8,10 @@ const NavMenu = (props) => {
                 <Container>
                     <Navbar variant='dark'>
                         <Row>
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <Navbar.Brand>AllInsure Claims</Navbar.Brand>
                             </Col>
-                            <Col sm={8}>
+                            <Col sm={7}>
                                 <Nav>
                                     <Nav.Link href='/customer'>Home</Nav.Link>
                                     <Nav.Link href='/customer/account'>Account Details</Nav.Link>
@@ -20,7 +20,7 @@ const NavMenu = (props) => {
                                 </Nav>
                             </Col>
                             <Col>
-                                <Button variant='secondary' href='/' onClick={() => {
+                                <Button className='button-logout' variant='secondary' href='/' onClick={() => {
                                     localStorage.clear()
                                 }}>
                                     Log out
@@ -38,17 +38,17 @@ const NavMenu = (props) => {
                 <Container>
                     <Navbar variant='dark'>
                         <Row>
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <Navbar.Brand>AllInsure Claims</Navbar.Brand>
                             </Col>
-                            <Col sm={8}>
+                            <Col sm={7}>
                                 <Nav>
                                     <Nav.Link href='/staff'>Home</Nav.Link>
                                     <Nav.Link href='/staff/claims'>Assigned Claims</Nav.Link>
                                 </Nav>
                             </Col>
                             <Col>
-                                <Button variant='secondary' href='/' onClick={() => {
+                                <Button className='button-logout' variant='secondary' href='/' onClick={() => {
                                     localStorage.clear()
                                 }}>
                                     Log out

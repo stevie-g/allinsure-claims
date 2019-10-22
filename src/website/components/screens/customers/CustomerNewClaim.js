@@ -8,7 +8,7 @@ const CustomerNewClaim = (props) => {
 
     if (props.appState.isLoggedIn && props.appState.user.type === 'customer') {
         return (
-            <div className='customer-home'>
+            <div className={(!insuranceType ? 'customer-home' : 'customer-home-form')}>
                 <Container style={{padding: '20px'}}>
                     <DropdownButton inline id='insuranceDropdown' title='Please select an insurance type' variant='secondary'>
                         <DropdownItem as='button' eventKey='car' onSelect={() => {

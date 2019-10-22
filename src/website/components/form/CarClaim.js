@@ -5,6 +5,9 @@ import { Redirect } from 'react-router-dom'
 const isActive = (claim) => {
     return (claim.status === 'Pending' || claim.status === 'Approved' || claim.status === 'Provide more information')
 }
+const isPending = (claim) => {
+    return (claim.status === 'Pending' || claim.status === 'Provide more information')
+}
 
 const CarClaim = (props) => {
     console.log(props)
@@ -152,7 +155,7 @@ const CarClaim = (props) => {
     if (props.appState.isLoggedIn) {
         if (!isSubmitted) {
             return (
-                <div classname='customer-home'>
+                <div className='customer-home-form'>
                     <Container>
                         <Card>
                             <Form>
@@ -282,31 +285,39 @@ const CarClaim = (props) => {
                                 )}
                                 {(props.appState.user.type === 'customer' && isActive(claimValues)) ? (
                                     <div>
-                                        <Button variant='secondary' onClick={() => updateIsEditable(!isEditable)}>
+                                        <Button className='button-edit' variant='secondary' onClick={() => updateIsEditable(!isEditable)}>
                                             {!isEditable ? 'Edit details' : 'Cancel'}
                                         </Button>
                                         {isEditable ? (
-                                            <Button variant='primary' type='Submit' onClick={(e) => handleSubmit(e)}>
+                                            <Button className='button-edit' variant='primary' type='Submit' onClick={(e) => handleSubmit(e)}>
                                                 Save changes
                                             </Button>
                                         ) : (
                                             ''
                                         )}
                                     </div>
-                                ) : props.appState.user.type === 'staff' ? (
+                                ) : (props.appState.user.type === 'staff' && isPending(claimValues)) ? (
                                     <div>
-                                        <Button variant='danger' onClick={() => updateStatus('Denied')}>
-                                            Deny
-                                        </Button>
-                                        <Button variant='secondary' onClick={() => {
-                                            if (!formValues.staffFeedback) updateRequestsInfo(true)
-                                            else handleRequestForInfo()
-                                        }}>
-                                            {(!requestsInfo ? (<span>Request more information</span>) : (<span>Save changes</span>))}
-                                        </Button>
-                                        <Button variant='success' onClick={() => updateStatus('Approved')}>
-                                            Approve
-                                        </Button>
+                                        <Row>
+                                            <Col sm={8}>
+                                                <Button className='button-staff' variant='secondary' onClick={() => {
+                                                    if (!formValues.staffFeedback) updateRequestsInfo(true)
+                                                    else handleRequestForInfo()
+                                                }}>
+                                                    {(!requestsInfo ? (<span>Request more information</span>) : (<span>Save changes</span>))}
+                                                </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button className='button-staff' variant='danger' onClick={() => updateStatus('Denied')}>
+                                                    Deny
+                                                </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button className='button-staff' variant='success' onClick={() => updateStatus('Approved')}>
+                                                    Approve
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     </div>
                                 ) : (
                                     ''
@@ -325,7 +336,7 @@ const CarClaim = (props) => {
                         <Card>
                             Your changes have been saved.
                             <div>
-                                <Button variant='outline-secondary' href={`/${props.appState.user.type}`}>
+                                <Button variant='secondary' href={`/${props.appState.user.type}`}>
                                     Return home
                                 </Button>
                             </div>

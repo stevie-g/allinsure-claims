@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Container, Card } from 'react-bootstrap'
+import { Form, Button, Container, Card, Row, Col } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 
 const isActive = (claim) => {
     return (claim.status === 'Pending' || claim.status === 'Approved' || claim.status === 'Provide more information')
+}
+const isPending = (claim) => {
+    return (claim.status === 'Pending' || claim.status === 'Provide more information')
 }
 
 const selectOptions = ['Fire (including bushfire)', 'Water damage (including flood)', 'Other weather event', 'Theft or attempted theft', 'Non-theft property damage']
@@ -153,7 +156,7 @@ const HomeInsuranceForm = (props) => {
     if (props.appState.isLoggedIn) {
         if (!isSubmitted) {
             return (
-                <div className='customer-home'>
+                <div className='customer-home-form'>
                     <Container>
                         <Card>
                             <Form onSubmit={handleSubmit}>
@@ -241,20 +244,28 @@ const HomeInsuranceForm = (props) => {
                                             ''
                                         )}
                                     </div>
-                                ) : props.appState.user.type === 'staff' ? (
+                                ) : props.appState.user.type === 'staff' && isPending(claimValues) ? (
                                     <div>
-                                        <Button variant='danger' onClick={() => updateStatus('Denied')}>
-                                            Deny
-                                        </Button>
-                                        <Button variant='secondary' onClick={() => {
-                                            if (!formValues.staffFeedback) updateRequestsInfo(true)
-                                            else handleRequestForInfo()
-                                        }}>
-                                            {(!requestsInfo ? (<span>Request more information</span>) : (<span>Save changes</span>))}
-                                        </Button>
-                                        <Button variant='success' onClick={() => updateStatus('Approved')}>
-                                            Approve
-                                        </Button>
+                                        <Row>
+                                            <Col sm={8}>
+                                                <Button className='button-staff' variant='secondary' onClick={() => {
+                                                    if (!formValues.staffFeedback) updateRequestsInfo(true)
+                                                    else handleRequestForInfo()
+                                                }}>
+                                                    {(!requestsInfo ? (<span>Request more information</span>) : (<span>Save changes</span>))}
+                                                </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button className='button-staff' variant='danger' onClick={() => updateStatus('Denied')}>
+                                                    Deny
+                                                </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button className='button-staff' variant='success' onClick={() => updateStatus('Approved')}>
+                                                    Approve
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     </div>
                                 ) : (
                                     ''
@@ -273,7 +284,7 @@ const HomeInsuranceForm = (props) => {
                         <Card>
                             Your changes have been saved
                             <div>
-                                <Button variant='outline-secondary' href={`/${props.appState.user.type}`}>
+                                <Button variant='secondary' href={`/${props.appState.user.type}`}>
                                     Return home
                                 </Button>
                             </div>

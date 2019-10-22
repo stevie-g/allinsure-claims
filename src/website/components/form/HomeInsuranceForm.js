@@ -40,7 +40,7 @@ const HomeInsuranceForm = (props) => {
             props.db.transaction((q) => {
                 q.executeSql('INSERT INTO CLAIM VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
                     [formValues.id, formValues.type, formValues.userID, formValues.staffID, formValues.submitDate, formValues.status, formValues.staffFeedback, formValues.additionalInfo, formValues.incidentType,
-                        formValues.incidentDate, formValues.policeReport, formValues.cost, formValues.accidentDescription, formValues.driverSurname, formValues.driverFirstName,
+                        formValues.incidentDate, formValues.policeReport, formValues.cost, formValues.incidentDescription, formValues.driverSurname, formValues.driverFirstName,
                         formValues.driverLicenceNumber, formValues.driverDateOfBirth, formValues.otherDriverSurname, formValues.otherDriverFirstName, formValues.otherDriverLicenceNumber,
                         formValues.otherDriverLicencePlate, formValues.otherDriverInsurance, formValues.damageLocation, formValues.contentsList],
                     function (q, results) {
@@ -48,6 +48,8 @@ const HomeInsuranceForm = (props) => {
                         storageNum++
                         let storageString = storageNum.toString()
                         localStorage.count = storageString
+                    }, function (e, q) {
+                        console.log(e.message)
                     }
                 )
             })
@@ -56,7 +58,7 @@ const HomeInsuranceForm = (props) => {
     }
 
     return (
-        <div className='newClaimForm customer-home'>
+        <div className='newClaimForm customer-home-form'>
             <Container>
                 <Card>
                     <Form onSubmit={handleSubmit}>

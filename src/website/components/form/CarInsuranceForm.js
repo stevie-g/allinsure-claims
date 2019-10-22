@@ -53,7 +53,7 @@ const CarInsuranceForm = (props) => {
         }
     }
     return (
-        <div className='newClaimForm customer-home'>
+        <div className='newClaimForm customer-home-form'>
             <Container>
                 <Card>
                     <Form onSubmit={handleSubmit} >
