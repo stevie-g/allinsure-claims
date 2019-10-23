@@ -57,6 +57,7 @@ function App() {
         const initialiseDatabase = () => {
             let dbresult = openDatabase('localdb', '1.0', 'Customer Database', 2 * 2014 * 1024)
             dbresult.transaction((q) => {
+                // UN-COMMENT TO RESET DATA - MUST BE COMMENTED OUT FOR PROGRAM TO WORK!!
                 // q.executeSql('DROP TABLE CUSTOMER;')
                 // q.executeSql('DROP TABLE STAFF;')
                 // q.executeSql('DROP TABLE CLAIM;')
