@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Container, Card } from 'react-bootstrap'
 
-const StaffHomePage = (props) => {
-    console.log('home', props)
+const CustomerHome = (props) => {
     const [firstName, updateFirstName] = useState('')
 
     useEffect(() => {
         const fetchData = () => {
             props.db.transaction((q) => {
-                q.executeSql('SELECT firstname FROM STAFF WHERE staff_ID = ?;', [props.appState.user.id], function (q, results) {
+                q.executeSql('SELECT firstname FROM CUSTOMER WHERE user_ID = ?;', [props.appState.user.id], function (q, results) {
                     let name = results.rows.item(0).firstname
                     updateFirstName(name)
                 })
             })
         }
-
         if (props.db.transaction && props.appState.user.id !== 'unknown') {
             fetchData()
         }
     }, [props.appState, props.db])
 
-    if (props.appState.isLoggedIn && props.appState.user.type === 'staff') {
+    if (props.appState.isLoggedIn && props.appState.user.type === 'customer') {
         return (
             <div className='customer-home'>
                 <Container>
@@ -33,6 +31,7 @@ const StaffHomePage = (props) => {
                     </Card>
                 </Container>
             </div>
+            
         )
     }
     else {
@@ -46,4 +45,4 @@ const StaffHomePage = (props) => {
     }
 }
 
-export default StaffHomePage
+export default CustomerHome

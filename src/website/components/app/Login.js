@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Container, Card } from 'react-bootstrap'
 
 
 const Login = (props) => {
+    console.log('login props', props)
+    const [isValid, updateIsValid] = useState(true)
     let userType = localStorage.userType
-    let authenticatedUserFirstName = ''
+    let authenticatedUserID = ''
     const loginValues = {
         username: '',
         password: ''
@@ -13,24 +15,52 @@ const Login = (props) => {
     
     const authenticateUser = (user) => {
         if (props.db) {
-            props.db.transaction(function (q) {
-                q.executeSql('SELECT * FROM CUSTOMER WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
-                    if (results.rows.length > 0) {
-                        authenticatedUserFirstName = results.rows.item(0).username
-                        localStorage.isLoggedIn = 'true'
-                        localStorage.firstName = authenticatedUserFirstName
-                        props.updateAppState({
-                            isLoggedIn: true,
-                            user: {
-                                type: userType,
-                                firstName: authenticatedUserFirstName
-                            }
-                        })
-                    }
-                }, function (q, e) {
-                    console.log(e.message)
+            if (props.appState.user.type === 'customer') {
+                props.db.transaction(function (q) {
+                    q.executeSql('SELECT * FROM CUSTOMER WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
+                        if (results.rows.length > 0) {
+                            authenticatedUserID = results.rows.item(0).user_ID
+                            localStorage.isLoggedIn = 'true'
+                            localStorage.userID = authenticatedUserID
+                            props.updateAppState({
+                                isLoggedIn: true,
+                                user: {
+                                    type: userType,
+                                    id: authenticatedUserID
+                                }
+                            })
+                        }
+                        else {
+                            updateIsValid(false)
+                        }
+                    }, function (q, e) {
+                        console.log(e.message)
+                    })
                 })
-            })
+            }
+            else if (props.appState.user.type === 'staff') {
+                props.db.transaction(function (q) {
+                    q.executeSql('SELECT * FROM STAFF WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
+                        if (results.rows.length > 0) {
+                            authenticatedUserID = results.rows.item(0).staff_ID
+                            localStorage.isLoggedIn = 'true'
+                            localStorage.userID = authenticatedUserID
+                            props.updateAppState({
+                                isLoggedIn: true,
+                                user: {
+                                    type: userType,
+                                    id: authenticatedUserID
+                                }
+                            })
+                        }
+                        else {
+                            updateIsValid(false)
+                        }
+                    }, function (q, e) {
+                        console.log(e.message)
+                    })
+                })
+            }
         }
     }
 
@@ -39,15 +69,20 @@ const Login = (props) => {
         authenticateUser(loginValues)
     }
 
-    // should redirect to page they came from
     if (props.appState.isLoggedIn) {
-        //switch
-        if (props.appState.user.type === 'customer') {
+        if (props.location.state) {
+            return (
+                <Redirect to={props.location.state.from.pathname} />
+            )
+        }
+        else if (props.appState.user.type === 'customer') {
+            console.log('redirecting customer')
             return (
                 <Redirect to='/customer' />
             )
         }
-        else if (props.appState.user.Type === 'staff') {
+        else if (props.appState.user.type === 'staff') {
+            console.log('redirecting staff')
             return (
                 <Redirect to='/staff' />
             )
@@ -60,25 +95,32 @@ const Login = (props) => {
     }
     else {
         return (
-            <Form className='loginForm' onSubmit={handleSubmit}>
-                <Form.Group controlId='loginFormUsername'>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type='text' placeholder='Enter username' name='username' onChange={(e) => {
-                        loginValues.username = e.target.value
-                    }}/>
-                </Form.Group>
-                <Form.Group controlId='loginFormPassword'>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type='password' placeholder='Enter password' name='password' onChange={(e) => {
-                        loginValues.password = e.target.value
-                    }}/>
-                </Form.Group>
-                <Button variant='light' type='submit' name='sub' value='Submit' onClick={(e) => {
-                    handleSubmit(e)
-                }}>
-                    Log in
-                </Button>
-            </Form>
+            <div className='login'>
+                <Container>
+                    <Card>
+                        <Form className='loginForm' onSubmit={handleSubmit}>
+                            <Form.Group controlId='loginFormUsername'>
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control type='text' placeholder='Enter username' name='username' onChange={(e) => {
+                                    loginValues.username = e.target.value
+                                }}/>
+                            </Form.Group>
+                            <Form.Group controlId='loginFormPassword'>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type='password' placeholder='Enter password' name='password' onChange={(e) => {
+                                    loginValues.password = e.target.value
+                                }}/>
+                            </Form.Group>
+                            {!isValid ? (<Form.Text><span style={{color: 'red'}}>Username or password is invalid</span><br /><br /></Form.Text>) : ('')}
+                            <Button variant='light' type='submit' name='sub' value='Submit' onClick={(e) => {
+                                handleSubmit(e)
+                            }}>
+                                Log in
+                            </Button>
+                        </Form>
+                    </Card>
+                </Container>
+            </div>
         )
     }
 }

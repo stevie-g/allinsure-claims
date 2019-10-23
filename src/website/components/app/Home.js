@@ -1,44 +1,54 @@
 import React from 'react'
 import * as styles from './App.css'
 import { Link, Redirect } from 'react-router-dom'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Container } from 'react-bootstrap'
 
 const Home = (props) => {
-    // should be wherever they came from
-    if (props.appState.isLoggedIn && props.appState.user.type === 'customer' && props.appState.user.firstName !== null) {
+    const fromUrl = props.location.state ? props.location.state.from.pathname : ''
+    if (props.appState.isLoggedIn && props.appState.user.type === 'customer' && props.appState.user.id !== null) {
         return (
             <Redirect to='/customer' />
+        )
+    }
+    else if (props.appState.isLoggedIn && props.appState.user.type === 'staff' && props.appState.user.id !== null) {
+        return (
+            <Redirect to='staff' />
         )
     }
     else {
         return (
             <div className='home'>
-                <Row>
-                    <Col>
-                        <Link to='/login/customer' onClick={() => {
-                            props.updateAppState({
-                                isLoggedIn: false,
-                                user: {
-                                    type: 'customer',
-                                    firstName: ''
-                                }
-                            })
-                            localStorage.userType = 'customer'
-                        }}>Customers</Link>
-                    </Col>
-                    <Col>
-                        <Link to='/login/staff' onClick={() => {
-                            props.updateAppState({
-                                isLoggedIn: false,
-                                user: {
-                                    type: 'staff',
-                                    firstName: ''
-                                }
-                            })
-                            localStorage.userType = 'staff'
-                        }}>Staff</Link>
-                    </Col>
-                </Row>
+                <Container className='home-text'>
+                    <Row>
+                        <Col><h1>AllInsure</h1></Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Link to={{pathname: '/login', state: {from: {pathname: fromUrl} }}} onClick={() => {
+                                props.updateAppState({
+                                    isLoggedIn: false,
+                                    user: {
+                                        type: 'customer',
+                                        id: ''
+                                    }
+                                })
+                                localStorage.userType = 'customer'
+                            }}>Customers</Link>
+                        </Col>
+                        <Col>
+                            <Link to={{pathname: '/login', state: {from: {pathname: fromUrl} }}} onClick={() => {
+                                props.updateAppState({
+                                    isLoggedIn: false,
+                                    user: {
+                                        type: 'staff',
+                                        id: ''
+                                    }
+                                })
+                                localStorage.userType = 'staff'
+                            }}>Staff</Link>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }

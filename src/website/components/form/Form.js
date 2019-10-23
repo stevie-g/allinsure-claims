@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Container, Card } from 'react-bootstrap'
 import CarInsuranceForm from './CarInsuranceForm'
 import HomeInsuranceForm from './HomeInsuranceForm'
 
@@ -15,13 +15,18 @@ const Form = (props) => {
             )
         case 'submitted':
             return (
-                <div>
-                    Your claim has been submitted!
-                    <div>
-                        <Button variant='outline-secondary' href='/customer'>
-                            Return home
-                        </Button>
-                    </div>
+                <div className='customer-home'>
+                    <Container>
+                        <Card>
+                            Your claim has been submitted<br /><br />
+                            <div>
+                                <Button variant='outline-secondary' href='/customer'>
+                                    Return home
+                                </Button>
+                            </div>
+                        </Card>
+                    </Container>
+                    
                 </div>
             )
         default:

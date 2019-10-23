@@ -1,52 +1,134 @@
-.App {
-  text-align: center;
-  
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .home {
-    padding: 200px 500px;
+    background-image: url("home-umbrella.jpg");
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
     justify-content: center;
+    text-align: center;
+}
+
+.home-text {
+    background-color: #144EB8;
+    border-radius: 10px;
+    display: inline-block;
+    color: #F7E7D4;
+    justify-content: center;
+    text-align: center;
+    margin-top: 40vh;
+    font-family: 'Merriweather', serif;
+}
+.home-text a {
+    color: #F7E7D4;
+    font-family: 'Merriweather', serif;
+}
+.home-text a:hover {
+    color: #FB8604;
+    font-family: 'Merriweather', serif;
+}
+
+.login {
+    background-image: url("home-umbrella.jpg");
+    background-size: cover;
+    justify-content: center;
+    padding: 200px 500px;
+    height: 100vh;
+    width: 100vw;
 }
 
 .loginForm {
-    padding: 200px 500px;
-    justify-content: center;
+    display: inline-block;
 }
 
-.tabs {
-    padding: 100px 200px;
+.card {
+    padding: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgray;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px grey;
+    font-family: 'Open Sans', sans-serif;
+    margin: 20px;
+}
+
+.navMenu {
+    justify-content: center;
+    background-color: #144EB8;
+    font-family: 'Merriweather', serif;
+    height: 12vh;
+}
+
+.navbar, .navbar-brand, .navbar-nav, .nav-link {
+    color: #F7E7D4;
+    font-weight: bold;
+}
+
+.navbar-nav {
+    margin-top: 4px;
+}
+
+.navbar-brand {
+    padding-right: 10px;
+    font-size: 1.5em;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.customer-home {
+    padding: 0px;
+    background-color: #F9EEE1;
+    width: 100%;
+    height: 88vh;
+}
+
+.customer-home-form {
+    padding: 0px;
+    background-color: #F9EEE1;
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    width: 100%;
 }
 
 .container {
     padding: 20px;
+    font-family: 'Merriweather', serif;
+}
+
+.newClaimForm span {
+    color: red;
+}
+
+.form-control.plain-text input:focus {
+    border: 0px;
+}
+
+.spinner-border {
+    margin-left: 50%;
+    margin-top: 25%;
+}
+
+.btn {
+    font-weight: bold;
+}
+
+.button-logout {
+    float: right;
+}
+
+.button-staff {
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgray;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px grey;
+}
+
+.button-edit {
+    width: 150px;
+    margin-left: 75%;
+    margin-bottom: 5px;
 }
