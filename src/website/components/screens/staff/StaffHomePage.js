@@ -10,7 +10,6 @@ const StaffHomePage = (props) => {
         const fetchData = () => {
             props.db.transaction((q) => {
                 q.executeSql('SELECT firstname FROM STAFF WHERE staff_ID = ?;', [props.appState.user.id], function (q, results) {
-                    console.log(results)
                     let name = results.rows.item(0).firstname
                     updateFirstName(name)
                 })

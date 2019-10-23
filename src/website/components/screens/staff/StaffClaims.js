@@ -15,7 +15,6 @@ const StaffClaims = (props) => {
             if (props.db) {
                 props.db.transaction((q) => {
                     q.executeSql('SELECT ID, user_ID, type, status FROM CLAIM WHERE staff_ID = ?;', [props.appState.user.id], function (q, results) {
-                        console.log(results)
                         let length = results.rows.length, i
                         for (i = 0; i < length; i++) {
                             let individualClaim = {

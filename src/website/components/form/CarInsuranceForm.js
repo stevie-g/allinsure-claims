@@ -2,7 +2,6 @@ import React from 'react'
 import { Form, Row, Col, Button, Container, Card } from 'react-bootstrap'
 
 const CarInsuranceForm = (props) => {
-
     const formValues = {
         id: `C000000${localStorage.count}`,
         type: 'Car',
@@ -29,10 +28,8 @@ const CarInsuranceForm = (props) => {
         damageLocation: '',
         contentsList: '',
     }
-    
 
     const handleSubmit = (e) => {
-        console.log(formValues)
         e.preventDefault()
         if (props.db) {
             props.db.transaction((q) => {

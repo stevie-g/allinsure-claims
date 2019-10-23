@@ -12,7 +12,6 @@ import HomeClaim from '../form/HomeClaim'
 import Home from './Home'
 import Login from './Login'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
 
 function App() {
     const [db, updateDb] = useState({})
@@ -58,9 +57,9 @@ function App() {
         const initialiseDatabase = () => {
             let dbresult = openDatabase('localdb', '1.0', 'Customer Database', 2 * 2014 * 1024)
             dbresult.transaction((q) => {
-                q.executeSql('DROP TABLE CUSTOMER;')
-                q.executeSql('DROP TABLE STAFF;')
-                q.executeSql('DROP TABLE CLAIM;')
+                // q.executeSql('DROP TABLE CUSTOMER;')
+                // q.executeSql('DROP TABLE STAFF;')
+                // q.executeSql('DROP TABLE CLAIM;')
             })
             dbresult.transaction((q) => {
                 q.executeSql('CREATE TABLE IF NOT EXISTS CUSTOMER (user_ID unique, username, firstname, lastname, password, phonenumber, address, email);')
@@ -90,9 +89,7 @@ function App() {
     return (
         <div>
             {appState.isLoggedIn && appState.user.type && appState.user.id &&
-               
-                    <NavMenu appState={appState} updateAppState={updateAppState} db={db} />
-               
+                <NavMenu appState={appState} updateAppState={updateAppState} db={db} />
             }
             <Router>
                 <Switch>
@@ -107,11 +104,6 @@ function App() {
                     <Route exact path='/claim/C:claimid' render={(props) => (<CarClaim {...props} appState={appState} updateAppState={updateAppState} db={db}/>)} />
                     <Route exact path='/claim/H:claimid' render={(props) => (<HomeClaim {...props} appState={appState} updateAppState={updateAppState} db={db}/>)} />
                     <Route exact path='/' render={(props) => (<Home {...props} appState={appState} updateAppState={updateAppState} />)} />
-                    {/* <Route path='/staff' render={(props) => (<StaffHomePage {...props} appState={appState} updateAppState={updateAppState} db={db}/>)} />
-                    <Route path='/staff' render={(props) => (<StaffHomePage {...props} appState={appState} updateAppState={updateAppState} db={db}/>)} /> */}
-                    {/* <PrivateRoute exact path='/customer' component={CustomerHomePage} appState={appState} db={db}/> */}
-                    {/* <PrivateRoute exact path='/staff' component={StaffHomePage} appState={appState} db={db}/> */}
-                    {/* <Route component={NoMatch} /> */}
                 </Switch>
             </Router>
         </div>

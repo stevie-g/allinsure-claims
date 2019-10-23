@@ -20,17 +20,11 @@ const CarClaim = (props) => {
 
     const formValues = {
         id: '',
-        // type: '',
-        // userID: '',
-        // staffID: '',
-        // submitDate: '',
         status: '',
         staffFeedback: '',
         additionalInfo: '',
-        // incidentType:'',
         incidentDate: '',
         policeReport: '',
-        // cost: '',
         accidentDescription: '',
         driverSurname: '',
         driverFirstName: '',
@@ -41,27 +35,18 @@ const CarClaim = (props) => {
         otherDriverLicenceNumber: '',
         otherDriverLicencePlate: '',
         otherDriverInsurance: ''
-        // damageLocation: '',
-        // contentsList: '',
     }
 
     useEffect(() => {
         const fetchData = () => {
             props.db.transaction((q) => {
                 q.executeSql('SELECT * FROM CLAIM WHERE ID = ?;', [claimID], function (q, results) {
-                    console.log(results)
                     formValues.id = results.rows.item(0).ID
-                    // formValues.type = results.rows.item(0).type
-                    // formValues.userID = results.rows.item(0).user_ID
-                    // formValues.staffID = results.rows.item(0).staff_ID
-                    // formValues.submitDate = results.rows.item(0).submit_date
                     formValues.status = results.rows.item(0).status
                     formValues.staffFeedback = results.rows.item(0).staff_feedback
                     formValues.additionalInfo = results.rows.item(0).more_info
-                    // formValues.incidentType = results.rows.item(0).incident_type
                     formValues.incidentDate = results.rows.item(0).incident_date
                     formValues.policeReport = results.rows.item(0).police_report
-                    // formValues.cost = results.rows.item(0).cost
                     formValues.accidentDescription = results.rows.item(0).description
                     formValues.driverSurname = results.rows.item(0).driver_surname
                     formValues.driverFirstName = results.rows.item(0).driver_firstname
@@ -72,9 +57,6 @@ const CarClaim = (props) => {
                     formValues.otherDriverLicenceNumber = results.rows.item(0).otherdriver_licence_number
                     formValues.otherDriverLicencePlate = results.rows.item(0).otherdriver_licence_plate
                     formValues.otherDriverInsurance = results.rows.item(0).otherdriver_insurance
-                    // formValues.damageLocation = results.rows.item(0).damage_location
-                    // formValues.contentsList = results.rows.item(0).contents_list
-                    console.log(formValues)
                     updateClaimValues(formValues)
                 }, function (e, q) {
                     console.log(e.message)
@@ -90,18 +72,9 @@ const CarClaim = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // if (!formValues.id) formValues.id = claimValues.id
-        // if (!formValues.type) formValues.type = claimValues.type
-        // if (!formValues.userID) formValues.userID = claimValues.userID
-        // if (!formValues.staffID) formValues.staffID = claimValues.staffID
-        // if (!formValues.submitDate) formValues.submitDate = claimValues.submitDate
-        // if (!formValues.status) formValues.status = claimValues.status
-        // if (!formValues.staffFeedback) formValues.staffFeedback = claimValues.staffFeedback
         if (!formValues.additionalInfo) formValues.additionalInfo = claimValues.additionalInfo
-        // if (!formValues.incidentType) formValues.incidentType = claimValues.incidentType
         if (!formValues.incidentDate) formValues.incidentDate = claimValues.incidentDate
         if (!formValues.policeReport) formValues.policeReport = claimValues.policeReport
-        // if (!formValues.cost) formValues.cost = claimValues.cost
         if (!formValues.accidentDescription) formValues.accidentDescription = claimValues.accidentDescription
         if (!formValues.driverSurname) formValues.driverSurname = claimValues.driverSurname
         if (!formValues.driverFirstName) formValues.driverFirstName = claimValues.driverFirstName
@@ -112,8 +85,6 @@ const CarClaim = (props) => {
         if (!formValues.otherDriverLicenceNumber) formValues.otherDriverLicenceNumber = claimValues.otherDriverLicenceNumber
         if (!formValues.otherDriverLicencePlate) formValues.otherDriverLicencePlate = claimValues.otherDriverLicencePlate
         if (!formValues.otherDriverInsurance) formValues.otherDriverInsurance = claimValues.otherDriverInsurance
-        // if (!formValues.damageLocation) formValues.damageLocation = claimValues.damageLocation
-        // if (!formValues.contentsList) formValues.contentsList = claimValues.contentsList
         console.log(formValues)
         if (props.db.transaction) {
             props.db.transaction((q) => {
@@ -122,7 +93,6 @@ const CarClaim = (props) => {
                         formValues.driverLicenceNumber, formValues.driverDateOfBirth, formValues.otherDriverSurname, formValues.otherDriverFirstName, formValues.otherDriverLicenceNumber,
                         formValues.otherDriverLicencePlate, formValues.otherDriverInsurance, claimValues.id],
                     function (q, results) {
-                        console.log('success!')
                         updateIsEditable(!isEditable)
                         updateIsSubmitted(true)
                     }
@@ -135,7 +105,6 @@ const CarClaim = (props) => {
         if (props.db.transaction) {
             props.db.transaction((q) => {
                 q.executeSql('UPDATE CLAIM SET status = ? WHERE ID = ?;', [status, claimValues.id], function (q, results) {
-                    console.log('success')
                     updateIsSubmitted(true)
                 })
             })
@@ -146,7 +115,6 @@ const CarClaim = (props) => {
         if (props.db.transaction) {
             props.db.transaction((q) => {
                 q.executeSql('UPDATE CLAIM SET status = "Provide more information", staff_feedback = ? WHERE ID = ?;', [formValues.staffFeedback, claimValues.id], function (q, results) {
-                    console.log('success - info')
                     updateIsSubmitted(true)
                 })
             })

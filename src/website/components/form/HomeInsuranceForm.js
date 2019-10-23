@@ -70,11 +70,6 @@ const HomeInsuranceForm = (props) => {
                             {selectOptions.map((title, index) => (
                                 <option key={index}>{title}</option>
                             ))}
-                                {/* <option>Fire (including bushfire)</option>
-                                <option>Water damage (including flood)</option>
-                                <option>Other weather event</option>
-                                <option>Theft or attempted theft</option>
-                                <option>Non-theft property damage</option> */}
                             </Form.Control>
                         </Form.Group>
                         <Form.Group id='homeInsuranceForm.ControlIncidentDate'>
@@ -113,15 +108,12 @@ const HomeInsuranceForm = (props) => {
                                 formValues.policeReport = e.target.value
                             }}/>
                         </Form.Group>
-
                         <Button variant='secondary' type='Submit'>
                             Submit claim
                         </Button>
-
                     </Form>
                 </Card>
             </Container>
-            
         </div>
     )
 }

@@ -8,10 +8,6 @@ const Login = (props) => {
     const [isValid, updateIsValid] = useState(true)
     let userType = localStorage.userType
     let authenticatedUserID = ''
-    const initialValues = {
-        username: '',
-        password: ''
-    }
     const loginValues = {
         username: '',
         password: ''
@@ -22,7 +18,6 @@ const Login = (props) => {
             if (props.appState.user.type === 'customer') {
                 props.db.transaction(function (q) {
                     q.executeSql('SELECT * FROM CUSTOMER WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
-                        console.log(results)
                         if (results.rows.length > 0) {
                             authenticatedUserID = results.rows.item(0).user_ID
                             localStorage.isLoggedIn = 'true'
@@ -46,7 +41,6 @@ const Login = (props) => {
             else if (props.appState.user.type === 'staff') {
                 props.db.transaction(function (q) {
                     q.executeSql('SELECT * FROM STAFF WHERE username = ? AND password = ?', [user.username, user.password], function (q, results) {
-                        console.log(results)
                         if (results.rows.length > 0) {
                             authenticatedUserID = results.rows.item(0).staff_ID
                             localStorage.isLoggedIn = 'true'
@@ -71,7 +65,6 @@ const Login = (props) => {
     }
 
     const handleSubmit = (e) => {
-        console.log(loginValues)
         e.preventDefault()
         authenticateUser(loginValues)
     }

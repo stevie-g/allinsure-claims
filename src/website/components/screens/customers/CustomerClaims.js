@@ -15,7 +15,6 @@ const CustomerClaims = (props) => {
             if (props.db !== null) {
                 props.db.transaction((q) => {
                     q.executeSql('SELECT ID, type, submit_date, status FROM CLAIM WHERE user_id = ?;', [props.appState.user.id], function (q, results) {
-                        console.log(results)
                         let length = results.rows.length, i
                         for (i = 0; i < length; i++) {
                             let individualClaim = {

@@ -16,12 +16,10 @@ const CustomerAccount = (props) => {
         const fetchData = () => {
             props.db.transaction((q) => {
                 q.executeSql('SELECT * FROM CUSTOMER WHERE user_ID = ?;', [props.appState.user.id], function (q, results) {
-                    console.log(results)
                     newDetails.firstname = results.rows.item(0).firstname
                     newDetails.lastname = results.rows.item(0).lastname
                     newDetails.email = results.rows.item(0).email
                     newDetails.phone = results.rows.item(0).phonenumber
-                    console.log(newDetails)
                     updateUserDetails(newDetails)
                 })
             })
@@ -38,13 +36,11 @@ const CustomerAccount = (props) => {
         if (!newDetails.lastname) newDetails.lastname = userDetails.lastname
         if (!newDetails.phone) newDetails.phone = userDetails.phone
         if (!newDetails.email) newDetails.email = userDetails.email
-        console.log(newDetails)
         if (props.db.transaction) {
             props.db.transaction((q) => {
                 q.executeSql('UPDATE CUSTOMER SET firstname = ?, lastname = ?, phonenumber = ?, email = ? WHERE user_ID = ?;',
                 [newDetails.firstname, newDetails.lastname, newDetails.phone, newDetails.email, props.appState.user.id],
                 function (q, results) {
-                    console.log('success')
                     updateIsEditable(!isEditable)
                 })
             })
@@ -67,7 +63,6 @@ const CustomerAccount = (props) => {
                                         }}/>
                                     </Col>
                                 </Form.Group>
-
                                 <Form.Group as={Row} controlId='userAccountLastName'>
                                     <Form.Label column>Last name</Form.Label>
                                     <Col sm='10'>
@@ -76,7 +71,6 @@ const CustomerAccount = (props) => {
                                         }}/>
                                     </Col>
                                 </Form.Group>
-
                                 <Form.Group as={Row} controlId='userAccountEmail'>
                                     <Form.Label column>Email</Form.Label>
                                     <Col sm='10'>
@@ -85,7 +79,6 @@ const CustomerAccount = (props) => {
                                         }}/>
                                     </Col>
                                 </Form.Group>
-
                                 <Form.Group as={Row} controlId='userAccountPhone'>
                                     <Form.Label column>Phone number</Form.Label>
                                     <Col sm='10'>

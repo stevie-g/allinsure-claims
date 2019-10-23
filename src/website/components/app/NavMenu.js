@@ -60,7 +60,7 @@ const NavMenu = (props) => {
             </div>
         )
     }
-    else { //place holder
+    else {
         return <div></div>
     }
 }
